@@ -188,6 +188,7 @@ export default function App() {
   }
   let [fontsLoaded] = useFonts({
     'PoppinsSemiBold': require('./fonts/Poppins/Poppins-SemiBold.ttf'),
+    'PoppinsMedium': require('./fonts/Poppins/Poppins-Medium.ttf'),
     'QuickSandLight': require('./fonts/QuickSand/Quicksand-Light.ttf'),
     'QuickSandRegular': require('./fonts/QuickSand/Quicksand-Regular.ttf'),
     'QuickSandMedium': require('./fonts/QuickSand/Quicksand-Medium.ttf'),
@@ -240,12 +241,10 @@ export default function App() {
             <AuthStack.Screen
               name="SignIn"
               component={SignIn}
-              options={{ title: "Sign In" }}
             />
             <AuthStack.Screen
               name="SignUp"
               component={SignUp}
-              options={{ title: "Sign Up" }}
             />
           </AuthStack.Navigator>
         )}

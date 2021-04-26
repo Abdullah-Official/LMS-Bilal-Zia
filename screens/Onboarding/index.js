@@ -5,10 +5,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import styles from "./styles";
 import { OnboardingData } from "../../Data/OnboardingData";
-import { AuthContext } from '../../context'
 
-const OnboardingScreen = () => {
-    const {signIn} = React.useContext(AuthContext)
+const OnboardingScreen = ({navigation}) => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.slide}>
@@ -52,7 +50,7 @@ const OnboardingScreen = () => {
   const _renderDoneButton = () => {
     
     return (
-      <TouchableOpacity onPress={() => signIn()} activeOpacity={0.3} style={styles.getStartedBtn}>
+      <TouchableOpacity onPress={() => navigation.navigate("SignIn")} activeOpacity={0.3} style={styles.getStartedBtn}>
         <Text style={styles.getStartedTxt}>Get Started</Text>
       </TouchableOpacity>
     );
