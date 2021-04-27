@@ -25,6 +25,7 @@ import AppLoading from 'expo-app-loading';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from "react-native";
 import OnboardingScreen from "./screens/Onboarding";
+import Chapters from "./screens/Chapters";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -51,6 +52,7 @@ export default function App() {
           title: route.params.name,
         })}
       />
+
     </HomeStack.Navigator>
   );
   const SearchStackScreens = () => (
@@ -76,6 +78,7 @@ export default function App() {
       }}
     >
       <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="Chapters" component={Chapters} />
     </ProfileStack.Navigator>
   );
 
@@ -147,8 +150,10 @@ export default function App() {
             headerTitle: null,
             headerShown: false,
           }}
+          initialRouteName="Home"
         >
           <Stack.Screen name="Home" component={TabsScreen} />
+          <Stack.Screen name="Chapters" component={Chapters} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen
               name="SignIn"
@@ -193,6 +198,7 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     'PoppinsSemiBold': require('./fonts/Poppins/Poppins-SemiBold.ttf'),
     'PoppinsMedium': require('./fonts/Poppins/Poppins-Medium.ttf'),
+    'PoppinsRegular': require('./fonts/Poppins/Poppins-Regular.ttf'),
     'QuickSandLight': require('./fonts/QuickSand/Quicksand-Light.ttf'),
     'QuickSandRegular': require('./fonts/QuickSand/Quicksand-Regular.ttf'),
     'QuickSandMedium': require('./fonts/QuickSand/Quicksand-Medium.ttf'),

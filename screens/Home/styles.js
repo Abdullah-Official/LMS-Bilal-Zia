@@ -22,8 +22,16 @@ const styles = StyleSheet.create({
     },
     coursesTxt:{
         fontFamily:'PoppinsSemiBold',
-        fontSize:23,
-        color:'#000',
+        fontSize:22,
+        color:'#01110A',
+    },
+    noEnrollmentTxt:{
+        fontFamily:'QuickSandRegular',
+        fontSize:14,
+        marginHorizontal:25,
+        color:'#535461',
+        marginTop:10,
+        width:250
     }
 })
 

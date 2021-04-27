@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         fontFamily:'PoppinsSemiBold',
         color:'#fff',
         fontSize:18,
-        textTransform:'capitalize'
+        textTransform:'uppercase'
     }
 })
 
