@@ -6,12 +6,14 @@ import { ImageBackground, Image } from 'react-native'
 import { Text, View } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import styles from './styles';
+import { AuthContext } from '../../context'
 
-const Signin = () => {
+
+const Signin = ({navigation}) => {
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-
+    const {signIn} = React.useContext(AuthContext)
     return (
       <>
         <ImageBackground
@@ -26,7 +28,10 @@ const Signin = () => {
               width: "100%",
             }}
           >
-            <KeyboardAvoidingView enabled behavior="position">
+            <KeyboardAvoidingView 
+            behavior="position"
+            enabled
+            >
               <View style={{ flex: 1, marginHorizontal: 20 }}>
                 <View style={{ alignItems: "center", marginTop: 100 }}>
                   <Image
@@ -60,14 +65,14 @@ const Signin = () => {
                  </View>
                 </View>
                 <View style={{marginVertical:15, alignItems:'center'}}>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.btn_container}>
+                    <TouchableOpacity  onPress={() => signIn()} activeOpacity={0.7} style={styles.btn_container}>
                         <Text style={styles.btn_txt}>Login in</Text>
                     </TouchableOpacity>
                     <Text style={styles.or_txt}>or</Text>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.btn2_container}>
+                    <TouchableOpacity onPress={() => signIn()} activeOpacity={0.7} style={styles.btn2_container}>
                         <Text style={styles.btn2_txt}>Login in with Google</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.7} style={styles.account_container}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SignUp")} style={styles.account_container}>
                       <Text style={styles.accTxt}>Create Account?</Text>
                       <Text style={styles.accTxt2}>Sign Up</Text>
                     </TouchableOpacity>

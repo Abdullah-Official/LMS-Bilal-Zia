@@ -150,6 +150,10 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={TabsScreen} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
+          <Stack.Screen
+              name="SignIn"
+              component={SignIn}
+            />
         </Stack.Navigator>
       </Animated.View>
     );

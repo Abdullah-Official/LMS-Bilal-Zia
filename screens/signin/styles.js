@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         borderRadius:1000,
         padding:4,
         paddingVertical:11,
-        alignItems:'center'
+        alignItems:'center',
+        alignSelf:'center'
     },
     btn_txt:{
         fontFamily:'QuickSandMedium',
@@ -40,7 +41,8 @@ const styles = StyleSheet.create({
         marginVertical:10,
         color:'#fff',
         fontFamily:'QuickSandRegular',
-        fontSize:13
+        fontSize:13,
+        textAlign:'center'
     },
     btn2_container:{
         backgroundColor:'transparent',
@@ -50,7 +52,8 @@ const styles = StyleSheet.create({
         borderColor: '#fff',
         padding:4,
         paddingVertical:11,
-        alignItems:'center'
+        alignItems:'center',
+        alignSelf:'center'
     },
     btn2_txt:{
         fontFamily:'QuickSandMedium',
@@ -60,12 +63,13 @@ const styles = StyleSheet.create({
     },
     account_container:{
         flexDirection:'row',
-        paddingTop:8
+        paddingTop:8,
+        alignSelf:'center'
     },
     accTxt:{
         color:'#fff',
         fontFamily:'QuickSandLight',
-        fontSize:12
+        fontSize:12,
     },
     accTxt2:{
         color:'#fff',
