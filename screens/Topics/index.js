@@ -6,7 +6,7 @@ import TopicBox from "../../components/TopicBox";
 import styles from '../Chapters/styles'
 
 const Topics = ({route}) => {
-    // console.log("topics ", route)
+    // console.log("topics ", route.params)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
@@ -27,13 +27,15 @@ const Topics = ({route}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ marginTop: 40, alignItems:'center' }}>
             <Text style={styles.chaptersHeading}>Chapter: {route.params.id}</Text>
-            {/* <Text style={styles.chapterNameHeading}>{route.params.name}</Text> */}
+            <Text style={styles.chapterNameHeading}>{route.params.name}</Text>
           </View>
           <View style={{ alignItems: "center", marginTop: 30 }}>
           { 
            route.params.topics.map((v,i) => {
+            //  console.log( "DATA PAsS ", route.params.topics[1])
+            //  console.log("V ", v )
              return (
-               <TopicBox  topicName={v.topicName} topicNumber={v.topicNumber} topicDetails={route.params}  />
+               <TopicBox  topicName={v.topicName} topicNumber={v.topicNumber} class={route.params.class} topicDetails={v.content} chapterName={route.params.name}   />
              )
            }) }         
           </View>

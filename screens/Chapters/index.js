@@ -6,7 +6,7 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 
 const Chapters = ({ route }) => {
-  // console.log(route, " chapters data")
+  // console.log(route.params.chapters, " chapters data")
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
@@ -32,7 +32,7 @@ const Chapters = ({ route }) => {
          {
            route.params.chapters.map((v,i) => {
              return (
-               <ChaptersBox  name={v.name} id={v.id} topics={v.topics} class={v.class}    />
+               <ChaptersBox key={i}  name={v.name} id={v.id} topics={v.topics} class={v.class}   />
              )
            })
          }
