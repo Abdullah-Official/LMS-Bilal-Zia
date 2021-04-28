@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   chaptersHeading: {
     fontFamily: "PoppinsSemiBold",
-    fontSize: 22,
+    fontSize: 20,
     color: "#01110A",
     textAlign: "center",
   },
@@ -35,6 +35,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#2C2C2C",
   },
+  chapterNameHeading:{
+    fontFamily: "PoppinsRegular",
+    fontSize: 20,
+    color: "#2C2C2C",
+    // paddingTop:20
+  },
+  topicHeading:{
+    fontFamily: "PoppinsRegular",
+    fontSize: 18,
+    color: "#2C2C2C",
+    paddingTop:10,
+    paddingLeft:4
+  },
+  topicTxt:{
+    fontFamily: "PoppinsMedium",
+    fontSize: 18,
+    color: "#2C2C2C",
+    paddingTop:10
+  }
 });
 
 export default styles;

@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const CoursesBox = (props) => {
   const navigation = useNavigation()
-  console.log(props)
+  // console.log(props)
   return (
     <View>
       <TouchableOpacity

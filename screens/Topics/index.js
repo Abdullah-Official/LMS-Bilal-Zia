@@ -1,17 +1,17 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import ChaptersBox from "../../components/Chapters";
 import HeaderApp from "../../components/Header";
-import styles from "./styles";
+import TopicBox from "../../components/TopicBox";
+import styles from '../Chapters/styles'
 
-const Chapters = ({ route }) => {
-  // console.log(route, " chapters data")
+const Topics = ({route}) => {
+    // console.log("topics ", route)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
         <HeaderApp
-          title={route.params.grade}
+          title={route.params.class}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -25,17 +25,17 @@ const Chapters = ({ route }) => {
         }}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ marginTop: 40 }}>
-            <Text style={styles.chaptersHeading}>Chapter Wise List</Text>
+          <View style={{ marginTop: 40, alignItems:'center' }}>
+            <Text style={styles.chaptersHeading}>Chapter: {route.params.id}</Text>
+            {/* <Text style={styles.chapterNameHeading}>{route.params.name}</Text> */}
           </View>
           <View style={{ alignItems: "center", marginTop: 30 }}>
-         {
-           route.params.chapters.map((v,i) => {
+          { 
+           route.params.topics.map((v,i) => {
              return (
-               <ChaptersBox  name={v.name} id={v.id} topics={v.topics} class={v.class}    />
+               <TopicBox  topicName={v.topicName} topicNumber={v.topicNumber} topicDetails={route.params}  />
              )
-           })
-         }
+           }) }         
           </View>
         </ScrollView>
       </View>
@@ -43,4 +43,4 @@ const Chapters = ({ route }) => {
   );
 };
 
-export default Chapters;
+export default Topics;

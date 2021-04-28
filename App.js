@@ -26,6 +26,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "react-native";
 import OnboardingScreen from "./screens/Onboarding";
 import Chapters from "./screens/Chapters";
+import Topics from "./screens/Topics";
+import TopicDetails from "./screens/TopicDetails";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -78,6 +80,8 @@ export default function App() {
     >
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="Chapters" component={Chapters} />
+      <ProfileStack.Screen name="Topics" component={Topics} />
+      <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
     </ProfileStack.Navigator>
   );
 
@@ -153,6 +157,8 @@ export default function App() {
         >
           <Stack.Screen name="Home" component={TabsScreen} />
           <Stack.Screen name="Chapters" component={Chapters} />
+          <Stack.Screen name="Topics" component={Topics} />
+          <Stack.Screen name="TopicDetails" component={TopicDetails} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>

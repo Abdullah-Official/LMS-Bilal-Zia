@@ -11,7 +11,7 @@ import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Home = () => {
-  const [enrolled] = useState(false);
+  const [enrolled] = useState(true);
 
   return (
     <>

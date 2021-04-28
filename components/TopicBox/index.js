@@ -5,16 +5,16 @@ import styles from "../../screens/Chapters/styles";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 
-const ChaptersBox = (props) => {
-  // console.log("START ", props, " PRAAAPS")
+const TopicBox = (props) => {
+  // console.log('box', props)
   const navigation = useNavigation()
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Topics", props)} style={styles.chapters_container} activeOpacity={0.7}>
+    <TouchableOpacity onPress={() => navigation.navigate("TopicDetails", props)}  style={styles.chapters_container} activeOpacity={0.7}>
       <View>
-        <Text style={styles.chapterNumber}>{props.id}</Text>
+        <Text style={styles.chapterNumber}>{props.topicNumber}</Text>
       </View>
       <View>
-        <Text style={styles.chapterName}>{props.name.slice(0,20)} ...</Text>
+        <Text style={styles.chapterName}>{props.topicName} ...</Text>
       </View>
       <View style={{ justifyContent: "center" }}>
         <FontAwesome5 name="chevron-right" size={18} color="black" />
@@ -23,4 +23,4 @@ const ChaptersBox = (props) => {
   );
 };
 
-export default ChaptersBox;
+export default TopicBox;
