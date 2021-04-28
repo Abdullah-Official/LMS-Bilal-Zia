@@ -1,6 +1,4 @@
-import { StyleSheet } from 'react-native'
-
-
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   chaptersHeading: {
@@ -13,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "#EFEFEF",
-    width: "70%",
+    width: "80%",
     padding: 14,
     borderRadius: 13,
     marginBottom: 13,
@@ -39,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default styles
+export default styles;
