@@ -6,10 +6,10 @@ import styles from './styles'
 
 const IndTopicCard = (props) => {
     const navigation = useNavigation()
-    // console.log("data ", props.route)
+    // console.log("data ", props)
     return (
         <View style={{alignItems:'center', marginHorizontal:30}}>
-            <TouchableOpacity onPress={() => props.navigation && navigation.navigate(props.navigation)} style={styles.card_container} activeOpacity={0.7}>
+            <TouchableOpacity onPress={() => props.navigation && navigation.navigate(props.navigation, props)} style={styles.card_container} activeOpacity={0.7}>
                 <View style={styles.image_cont}>
                     <Image 
                     source={props.image}

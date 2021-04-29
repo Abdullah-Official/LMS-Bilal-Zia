@@ -28,6 +28,9 @@ import OnboardingScreen from "./screens/Onboarding";
 import Chapters from "./screens/Chapters";
 import Topics from "./screens/Topics";
 import TopicDetails from "./screens/TopicDetails";
+import VideoLecture from "./screens/video-lecture";
+import AllCourses from "./screens/all-courses";
+import CourseDetails from "./screens/course-details";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -82,6 +85,9 @@ export default function App() {
       <ProfileStack.Screen name="Chapters" component={Chapters} />
       <ProfileStack.Screen name="Topics" component={Topics} />
       <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
+      <ProfileStack.Screen name="VideoLecture" component={VideoLecture} />
+      <ProfileStack.Screen name="AllCourses" component={AllCourses} />
+      <Stack.Screen name="CourseDetails" component={CourseDetails} />
     </ProfileStack.Navigator>
   );
 
@@ -159,6 +165,9 @@ export default function App() {
           <Stack.Screen name="Chapters" component={Chapters} />
           <Stack.Screen name="Topics" component={Topics} />
           <Stack.Screen name="TopicDetails" component={TopicDetails} />
+          <Stack.Screen name="VideoLecture" component={VideoLecture} />
+          <Stack.Screen name="AllCourses" component={AllCourses} />
+          <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>

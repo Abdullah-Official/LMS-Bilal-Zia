@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import styles from "./styles";
@@ -7,15 +7,16 @@ import { useNavigation } from '@react-navigation/native';
 
 const CoursesBox = (props) => {
   const navigation = useNavigation()
-  // console.log(props)
+  console.log(props.enrolled)
+  const [buy, setBuy] = useState(props.enrolled)
   return (
     <View>
       <TouchableOpacity
-      onPress={() => navigation.navigate("Chapters", props)}
+      onPress={() => buy !== false ? navigation.navigate("CourseDetails", props) : navigation.navigate("Chapters", props)}
         style={
           (styles.courseBox_container,
           props.id % 2 === 0
-            ? { ...styles.courseBox_container, backgroundColor: "#224E8F" }
+            ? { ...styles.courseBox_container, backgroundColor: "#224E8F", }
             : styles.courseBox_container)
         }
         activeOpacity={0.8}

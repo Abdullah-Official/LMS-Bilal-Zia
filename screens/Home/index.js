@@ -8,11 +8,12 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 import { CoursesData } from "../../Data/Courses";
 import { FlatList } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/core";
 
 const Home = () => {
   const [enrolled] = useState(true);
-
+  const navigation = useNavigation()
   return (
     <>
       <ScrollView style={{backgroundColor:'#fff'}}>
@@ -67,6 +68,7 @@ const Home = () => {
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
+                      // enrolled={item.enrolled}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}
@@ -77,8 +79,8 @@ const Home = () => {
                 </Text>
               )}
             </View>
-            <View style={{ marginBottom: 20 }}>
-              <View style={{ marginHorizontal: 25, marginTop: 30, width: 240 }}>
+            <View style={{ marginBottom: 25 }}>
+              <View style={{ marginHorizontal: 25, marginTop: 10, width: 240 }}>
                 <Text style={styles.coursesTxt}>Recommended for you</Text>
               </View>
               <View>
@@ -92,11 +94,15 @@ const Home = () => {
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
+                      // enrolled={false}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}
                 />
               </View>
+              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("AllCourses")} style={{marginHorizontal:25, }}>
+                <Text style={styles.viewAllTxt}>View all courses</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

@@ -25,19 +25,25 @@ const Topics = ({route}) => {
         }}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{ marginTop: 40, alignItems:'center' }}>
-            <Text style={styles.chaptersHeading}>Chapter: {route.params.id}</Text>
+          <View style={{ marginTop: 40, alignItems: "center" }}>
+            <Text style={styles.chaptersHeading}>
+              Chapter: {route.params.id}
+            </Text>
             <Text style={styles.chapterNameHeading}>{route.params.name}</Text>
           </View>
           <View style={{ alignItems: "center", marginTop: 30 }}>
-          { 
-           route.params.topics.map((v,i) => {
-            //  console.log( "DATA PAsS ", route.params.topics[1])
-            //  console.log("V ", v )
-             return (
-               <TopicBox  topicName={v.topicName} topicNumber={v.topicNumber} class={route.params.class} topicDetails={v.content} chapterName={route.params.name}   />
-             )
-           }) }         
+            {route.params.topics.map((v, i) => {
+              return (
+                <TopicBox
+                  key={i}
+                  topicName={v.topicName}
+                  topicNumber={v.topicNumber}
+                  class={route.params.class}
+                  topicDetails={v.content}
+                  chapterName={route.params.name}
+                />
+              );
+            })}
           </View>
         </ScrollView>
       </View>

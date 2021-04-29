@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         height:170,
         position:'relative',
         marginLeft:25,
-        marginRight:10
+        marginRight:10,
+        marginBottom:13
     },
     course_class:{
         fontFamily:'PoppinsMedium',

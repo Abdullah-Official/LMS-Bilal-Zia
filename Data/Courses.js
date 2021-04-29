@@ -3,6 +3,7 @@ export const CoursesData = [
     id: "1",
     grade: "CLASS IX",
     about: "lorem ipsum lorem ipsum lorem ipsum ",
+    enrolled:true,
     chapters: [
       {
         id: "1",
@@ -286,6 +287,7 @@ export const CoursesData = [
     id: "2",
     grade: "CLASS X",
     about: "lorem ipsum lorem ipsum lorem ipsum ",
+    enrolled:true,
     chapters: [
       {
         id: "1",
@@ -569,6 +571,7 @@ export const CoursesData = [
     id: "3",
     grade: "CLASS XI",
     about: "lorem ipsum lorem ipsum lorem ipsum ",
+    enrolled:true,
     chapters: [
       {
         id: "1",
@@ -852,6 +855,7 @@ export const CoursesData = [
     id: "4",
     grade: "CLASS XII",
     about: "lorem ipsum lorem ipsum lorem ipsum ",
+    enrolled:true,
     chapters: [
       {
         id: "1",

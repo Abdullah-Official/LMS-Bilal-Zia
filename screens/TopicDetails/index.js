@@ -6,7 +6,7 @@ import IndTopicCard from "../../components/IndTopicCard";
 import styles from '../Chapters/styles'
 
 const TopicDetails = (props) => {
-    console.log("TopicDetails Start ", props)
+    // console.log("TopicDetails Start ", props)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
@@ -41,8 +41,8 @@ const TopicDetails = (props) => {
                  key={i}
                  image={v.image}
                  content={v.content}
-                //  navigation={v.navigatio}
-
+                 navigation={v.navigation}
+                  topicActivities={props.route.params}
                  />
                )
              })

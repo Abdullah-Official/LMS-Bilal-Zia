@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         fontFamily:'PoppinsSemiBold',
         fontSize:22,
         color:'#01110A',
+        marginBottom:3
     },
     noEnrollmentTxt:{
         fontFamily:'QuickSandRegular',
@@ -32,6 +33,12 @@ const styles = StyleSheet.create({
         color:'#535461',
         marginTop:10,
         width:250
+    },
+    viewAllTxt:{
+        fontFamily:'QuickSandMedium',
+        fontSize:14,
+        color:'#535461',
+        fontWeight:'600'
     }
 })
 
