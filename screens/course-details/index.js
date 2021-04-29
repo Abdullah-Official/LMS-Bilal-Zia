@@ -12,11 +12,11 @@ import { Image } from 'react-native'
 const CourseDetails = (props) => {
     console.log("props ",props.route.params.grade)
     return (
-        <ScrollView style={{backgroundColor:'#fff'}}>
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{backgroundColor:'#2F5060'}}>
+        <View style={{ flex: 1,}}>
           <StatusBar translucent={true} />
-          <View style={{ flex: 2, backgroundColor: "#fff", marginTop:32 }}>
-            <ImageBackground
+          <View style={{ flex: 2, backgroundColor:'#2F5060', paddingBottom:30,  }}>
+            {/* <ImageBackground
               source={require("../../assets/buy_now_screen.png")}
               style={{
                 flex: 2,
@@ -24,8 +24,8 @@ const CourseDetails = (props) => {
                 width: "100%",
                 resizeMode: "cover",
               }}
-            >
-              <View style={{marginTop:-20}}>
+            > */}
+              <View style={{marginTop:30}} >
                 <HeaderApp 
                 iconLeft={require('../../assets/back-arrow-white.png')}
                 nav="back"
@@ -38,12 +38,13 @@ const CourseDetails = (props) => {
               <View>
                   <Text style={styles.header_para}>This package includes video lectures of all subject</Text>
               </View>
-              <View style={{marginHorizontal:25, marginTop:90}}>
+              
+              {/* </ImageBackground> */}
+              </View>
+              <View style={{flex:2, borderTopRightRadius:30, borderTopLeftRadius:30, backgroundColor:'#fff'}}>
+              <View style={{marginHorizontal:25, marginTop:30}}>
                   <Text style={styles.headingLearn}>What will you learn</Text>
               </View>
-              </ImageBackground>
-              </View>
-              <View style={{flex:1,}}>
                   <View style={styles.details_container}>
                   <Ionicons name="md-checkmark-sharp" size={24} color="#2C2C2C" style={{opacity:0.4}} />
                   <Text style={styles.detailsTxt}>Lorem ipsum dolor sit amet, consectetur adipiscing elit </Text>

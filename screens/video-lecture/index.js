@@ -12,7 +12,7 @@ const VideoLecture = (props) => {
     // console.log("Video ", props.route.params.topicActivities.topicName)
     return (
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
-        <View style={{ flex: 1, backgroundColor: "#315566" }}>
+        <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center' }}>
           <HeaderApp
             title={props.route.params.topicActivities.class}
             iconLeft={require("../../assets/back-arrow-white.png")}
@@ -47,10 +47,10 @@ const VideoLecture = (props) => {
             </View>
             <View style={{ marginTop: 40 }}>
               <Text style={styles.videoLectureHeading}>Video Lecture</Text>
-              <View style={{marginTop:20}}>
+              <View style={{marginTop:20, alignItems:'center'}}>
                 <Video
                   ref={video}
-                  style={{height:200, width:'100%'}}
+                  style={{height:200, width:'90%'}}
                   source={require('../../assets/lecture.mp4')}
                   useNativeControls
                   resizeMode="contain"

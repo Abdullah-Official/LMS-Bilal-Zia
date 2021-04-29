@@ -9,7 +9,7 @@ const TopicDetails = (props) => {
     // console.log("TopicDetails Start ", props)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
-      <View style={{ flex: 1, backgroundColor: "#315566" }}>
+      <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center' }}>
         <HeaderApp
           title={props.route.params.class}
           iconLeft={require("../../assets/back-arrow-white.png")}

@@ -29,7 +29,7 @@ const Home = () => {
                 resizeMode: "contain",
               }}
             >
-              <View>
+              <View style={{justifyContent:'center', marginTop:30}}>
                 <HeaderApp 
                 iconLeft={require('../../assets/nav-con.png')}
                 iconRight={require('../../assets/logo.png')}

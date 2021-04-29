@@ -12,7 +12,7 @@ const CoursesBox = (props) => {
   return (
     <View>
       <TouchableOpacity
-      onPress={() => buy !== false ? navigation.navigate("CourseDetails", props) : navigation.navigate("Chapters", props)}
+      onPress={() => buy === false ? navigation.navigate("CourseDetails", props) : navigation.navigate("Chapters", props)}
         style={
           (styles.courseBox_container,
           props.id % 2 === 0

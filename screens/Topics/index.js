@@ -9,7 +9,7 @@ const Topics = ({route}) => {
     // console.log("topics ", route.params)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
-      <View style={{ flex: 1, backgroundColor: "#315566" }}>
+      <View style={{ flex: 1, backgroundColor: "#315566" , justifyContent:'center'}}>
         <HeaderApp
           title={route.params.class}
           iconLeft={require("../../assets/back-arrow-white.png")}

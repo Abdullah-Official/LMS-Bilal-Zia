@@ -9,7 +9,7 @@ const Chapters = ({ route }) => {
   // console.log(route.params.chapters, " chapters data")
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
-      <View style={{ flex: 1, backgroundColor: "#315566" }}>
+      <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center'}}>
         <HeaderApp
           title={route.params.grade}
           iconLeft={require("../../assets/back-arrow-white.png")}

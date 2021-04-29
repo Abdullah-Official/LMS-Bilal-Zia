@@ -18,14 +18,15 @@ const styles = StyleSheet.create({
       color:'#fff',
       fontFamily:'QuickSandRegular',
       fontSize:12,
-      paddingHorizontal:6,
+    //   paddingHorizontal:6,
       paddingTop:10
   },
   headingLearn:{
       color:'#0E0E0E',
       paddingLeft:19,
       fontFamily:'PoppinsSemiBold',
-      fontSize:20
+      fontSize:20,
+      paddingBottom:10
   },
   details_container:{
       flexDirection:'row',
