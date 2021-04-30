@@ -5,11 +5,12 @@ import { ScrollView } from 'react-native-gesture-handler'
 import CoursesBox from '../../components/Courses'
 import HeaderApp from '../../components/Header'
 import { CoursesData } from '../../Data/Courses'
+import CourseDetails from '../course-details'
 
 const AllCourses = () => {
     return (
         <View style={{flex:1, backgroundColor:'#fff'}}>
-            <View>
+            <View style={{justifyContent:'center', marginTop:30}}>
             <HeaderApp
             iconLeft={require("../../assets/nav-icon-dark.png")}
             iconRight={require('../../assets/profile-pic.png')}
@@ -31,6 +32,7 @@ const AllCourses = () => {
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
+                      navigation={"CourseDetails"}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}

@@ -31,6 +31,9 @@ import TopicDetails from "./screens/TopicDetails";
 import VideoLecture from "./screens/video-lecture";
 import AllCourses from "./screens/all-courses";
 import CourseDetails from "./screens/course-details";
+import ProfileEdit from "./screens/profile-edit";
+import Notifications from "./screens/notifications";
+import InstructorScreen from "./screens/instructor";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -68,7 +71,6 @@ export default function App() {
         headerShown: false,
       }}
     >
-      <SearchStack.Screen name="Search" component={Search} />
       <SearchStack.Screen name="Search2" component={Search2} />
     </SearchStack.Navigator>
   );
@@ -81,13 +83,15 @@ export default function App() {
         headerShown: false,
       }}
     >
-      <ProfileStack.Screen name="Profile" component={Profile} />
+            <ProfileStack.Screen name="Profile" component={Profile} />
+            <ProfileStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <ProfileStack.Screen name="Chapters" component={Chapters} />
       <ProfileStack.Screen name="Topics" component={Topics} />
       <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
       <ProfileStack.Screen name="VideoLecture" component={VideoLecture} />
       <ProfileStack.Screen name="AllCourses" component={AllCourses} />
-      <Stack.Screen name="CourseDetails" component={CourseDetails} />
+      <ProfileStack.Screen name="CourseDetails" component={CourseDetails} />
+      <ProfileStack.Screen name="InstrutorScreen" component={InstructorScreen} />
     </ProfileStack.Navigator>
   );
 
@@ -101,7 +105,8 @@ export default function App() {
       }}
     >
       <Tabs.Screen name="Home" component={HomeStackScreens} />
-      <Tabs.Screen name="Search" component={SearchStackScreens} />
+      <Tabs.Screen name="Notifications" component={Notifications} />
+      <Tabs.Screen name="Profile" component={ProfileStackScreens} />
     </Tabs.Navigator>
   );
 
@@ -169,6 +174,7 @@ export default function App() {
           <Stack.Screen name="AllCourses" component={AllCourses} />
           <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
+          <Stack.Screen name="InstrutorScreen" component={InstructorScreen} />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>
       </Animated.View>

@@ -68,7 +68,7 @@ const Home = () => {
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
-                      // enrolled={item.enrolled}
+                      navigation={"Chapters"}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}
@@ -94,7 +94,7 @@ const Home = () => {
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
-                      // enrolled={false}
+                      navigation={"CourseDetails"}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}

@@ -16,15 +16,6 @@ const CourseDetails = (props) => {
         <View style={{ flex: 1,}}>
           <StatusBar translucent={true} />
           <View style={{ flex: 2, backgroundColor:'#2F5060', paddingBottom:30,  }}>
-            {/* <ImageBackground
-              source={require("../../assets/buy_now_screen.png")}
-              style={{
-                flex: 2,
-                height: 330,
-                width: "100%",
-                resizeMode: "cover",
-              }}
-            > */}
               <View style={{marginTop:30}} >
                 <HeaderApp 
                 iconLeft={require('../../assets/back-arrow-white.png')}
@@ -67,7 +58,7 @@ const CourseDetails = (props) => {
                   </View>
                   <View style={{marginHorizontal:30, marginVertical:20}}>
                       <Text style={styles.headingLearn}>Instructor</Text>
-                      <TouchableOpacity activeOpacity={0.7} style={styles.instructor_container}>
+                      <TouchableOpacity onPress={() => props.navigation.navigate("InstrutorScreen")} activeOpacity={0.7} style={styles.instructor_container}>
                           <View>
                             <Image 
                             source={require('../../assets/instructor.png')}
