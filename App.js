@@ -171,6 +171,7 @@ export default function App() {
           <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen name="InstrutorScreen" component={InstructorScreen} />
+          <Stack.Screen name="Purchases" component={Purchases} />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>
       </Animated.View>
