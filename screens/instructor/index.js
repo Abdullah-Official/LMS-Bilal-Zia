@@ -7,15 +7,6 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 
 const InstructorScreen = () => {
-  const openDialScreen = () => {
-    let number = "";
-    if (Platform.OS === "ios") {
-      number = "telprompt:${03088913294}";
-    } else {
-      number = "tel:${03088913294}";
-    }
-    Linking.openURL(number);
-  };
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={{ flex: 1 }}>
@@ -49,17 +40,6 @@ const InstructorScreen = () => {
               </Text>
             </View>
             <View style={styles.social_container}>
-              <TouchableOpacity  onPress={() => openDialScreen()}style={{ paddingHorizontal: 10 }}>
-                <Image
-                  source={require("../../assets/call.png")}
-                  style={{
-                    width: 40,
-                    height: 40,
-                    resizeMode: "contain",
-                    borderRadius: 4,
-                  }}
-                />
-              </TouchableOpacity>
               <TouchableOpacity style={{ paddingHorizontal: 10 }}>
                 <Image
                   source={require("../../assets/mail.png")}

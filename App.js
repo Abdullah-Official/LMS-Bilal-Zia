@@ -1,4 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -11,10 +11,8 @@ import React from "react";
 import SignIn from "./screens/signin";
 import SignUp from "./screens/signup";
 import Home from "./screens/Home";
-import Search from "./screens/Search";
+import Purchases from "./screens/Purchases";
 import Profile from "./screens/Profile";
-import Details from "./screens/Details";
-import Search2 from "./screens/Search2";
 import { Text, View } from "react-native";
 import { AuthContext } from "./context";
 import Animated, { color } from "react-native-reanimated";
@@ -34,6 +32,8 @@ import CourseDetails from "./screens/course-details";
 import ProfileEdit from "./screens/profile-edit";
 import Notifications from "./screens/notifications";
 import InstructorScreen from "./screens/instructor";
+import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -53,13 +53,6 @@ export default function App() {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen
-        name="Details"
-        component={Details}
-        options={({ route }) => ({
-          title: route.params.name,
-        })}
-      />
     </HomeStack.Navigator>
   );
   const SearchStackScreens = () => (
@@ -71,7 +64,7 @@ export default function App() {
         headerShown: false,
       }}
     >
-      <SearchStack.Screen name="Search2" component={Search2} />
+      <SearchStack.Screen name="Purchases" component={Purchases} />
     </SearchStack.Navigator>
   );
   const ProfileStackScreens = () => (
@@ -83,15 +76,18 @@ export default function App() {
         headerShown: false,
       }}
     >
-            <ProfileStack.Screen name="Profile" component={Profile} />
-            <ProfileStack.Screen name="ProfileEdit" component={ProfileEdit} />
+      <ProfileStack.Screen name="Profile" component={Profile} />
+      <ProfileStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <ProfileStack.Screen name="Chapters" component={Chapters} />
       <ProfileStack.Screen name="Topics" component={Topics} />
       <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
       <ProfileStack.Screen name="VideoLecture" component={VideoLecture} />
       <ProfileStack.Screen name="AllCourses" component={AllCourses} />
       <ProfileStack.Screen name="CourseDetails" component={CourseDetails} />
-      <ProfileStack.Screen name="InstrutorScreen" component={InstructorScreen} />
+      <ProfileStack.Screen
+        name="InstrutorScreen"
+        component={InstructorScreen}
+      />
     </ProfileStack.Navigator>
   );
 
@@ -113,11 +109,11 @@ export default function App() {
   const Drawer = createDrawerNavigator();
 
   const [isLoading, setIsLoading] = React.useState();
-  const [userToken, setUserToken] = React.useState('abd');
+  const [userToken, setUserToken] = React.useState();
   const [progress, setProgress] = React.useState(new Animated.Value(0));
   const scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
-    outputRange: [1, 0.6],
+    outputRange: [1, 0.7],
   });
   const borderRadius = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -182,35 +178,65 @@ export default function App() {
   };
 
   function CustomDrawerContent(props) {
+    // const navigation = useNavigation()
     return (
-      <DrawerContentScrollView {...props}>
-        <DrawerItem
-          label="Profile"
-          onPress={() => props.navigation.navigate("Profile")}
-          labelStyle={{
-            color: "white",
-            fontSize: 15,
-            zIndex: 111,
-          }}
-        />
-        <DrawerItem
-          label="Home"
-          onPress={() => props.navigation.navigate("Home")}
-          labelStyle={{ color: "#fff", fontSize: 15 }}
-        />
-        <DrawerItem
-          label="Search"
-          onPress={() => props.navigation.navigate("Search")}
-          labelStyle={{ color: "#fff", fontSize: 15 }}
-        />
-        <DrawerItem
-          label="Search2"
-          onPress={() => props.navigation.navigate("Search2")}
-          labelStyle={{ color: "#fff", fontSize: 15 }}
-        />
-      </DrawerContentScrollView>
+      <>
+        <View style={{ position: "absolute", bottom: 200, right: 40 }}>
+          <Image source={require("./assets/dot_design.png")} />
+        </View>
+        <View style={{ position: "absolute", bottom: 0, left: 0 }}>
+          <Image source={require("./assets/ellipse.png")} />
+        </View>
+        <DrawerContentScrollView {...props}>
+          <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
+            <Image
+              source={require("./assets/nav-con.png")}
+              style={{
+                height: 40,
+                width: 40,
+                resizeMode: "contain",
+                margin: 20,
+              }}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              flex: 1,
+              marginTop: 60,
+              marginLeft: 10,
+            }}
+          >
+            <DrawerItem
+              label="Purchases"
+              onPress={() => props.navigation.navigate("Purchases")}
+              labelStyle={styles.drawerLabel}
+              style={styles.drawerItem}
+              icon={() => (
+                <AntDesign name="shoppingcart" size={24} color="white" />
+              )}
+            />
+            <DrawerItem
+              label="Connect"
+              onPress={() => props.navigation.navigate("InstrutorScreen")}
+              labelStyle={styles.drawerLabel}
+              style={styles.drawerItem}
+              icon={() => (
+                <Ionicons name="call-outline" size={24} color="white" />
+              )}
+            />
+            <DrawerItem
+              label="Log Out"
+              onPress={authContext.signOut}
+              labelStyle={styles.drawerLabel}
+              style={styles.drawerItem}
+              icon={() => <Feather name="log-out" size={24} color="white" />}
+            />
+          </View>
+        </DrawerContentScrollView>
+      </>
     );
   }
+  console.log(authContext);
   let [fontsLoaded] = useFonts({
     PoppinsSemiBold: require("./fonts/Poppins/Poppins-SemiBold.ttf"),
     PoppinsMedium: require("./fonts/Poppins/Poppins-Medium.ttf"),
@@ -226,7 +252,16 @@ export default function App() {
       <AuthContext.Provider value={authContext}>
         <NavigationContainer>
           {userToken ? (
-            <LinearGradient style={{ flex: 1 }} colors={["#00273A", "#024D71"]}>
+            <ImageBackground
+              style={{
+                flex: 1,
+                height: "100%",
+                width: "100%",
+                resizeMode: "cover",
+              }}
+              source={require("./assets/gradient-bg.png")}
+            >
+              {/* <LinearGradient style={{ flex: 1,  }} colors={["#00273A", "#024D71"]}> */}
               <Drawer.Navigator
                 // hideStatusBar
                 drawerType="slide"
@@ -234,7 +269,7 @@ export default function App() {
                 drawerStyle={styles.drawerStyles}
                 contentContainerStyle={{ flex: 1 }}
                 drawerContentOptions={{
-                  activeBackgroundColor: "#00273A",
+                  // activeBackgroundColor: "#00273A",
                   activeTintColor: "white",
                   inactiveTintColor: "white",
                 }}
@@ -252,7 +287,8 @@ export default function App() {
                   {(props) => <Screens {...props} style={animatedStyle} />}
                 </Drawer.Screen>
               </Drawer.Navigator>
-            </LinearGradient>
+              {/* </LinearGradient> */}
+            </ImageBackground>
           ) : (
             <AuthStack.Navigator
               headerMode="none"
@@ -292,7 +328,17 @@ const styles = StyleSheet.create({
     // overflow: 'scroll',
     // borderWidth: 1,
   },
-  drawerStyles: { flex: 1, width: "50%", backgroundColor: "transparent" },
-  drawerItem: { alignItems: "flex-start", marginVertical: 0 },
-  drawerLabel: { color: "white", marginLeft: -16 },
+  drawerStyles: {
+    flex: 1,
+    width: "60%",
+    backgroundColor: "transparent",
+    justifyContent: "center",
+  },
+  // drawerItem: { alignItems: "flex-start", marginVertical: 0 },
+  drawerLabel: {
+    color: "#fff",
+    marginLeft: -16,
+    fontFamily: "QuickSandRegular",
+    fontSize: 17,
+  },
 });
