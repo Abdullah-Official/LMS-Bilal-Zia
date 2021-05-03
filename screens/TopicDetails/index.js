@@ -26,7 +26,7 @@ const TopicDetails = (props) => {
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ marginTop: 40, marginHorizontal:25, alignItems:'center' }}>
-            <Text style={styles.chaptersHeading}>Chapter: {props.route.params.topicNumber}</Text>
+            <Text style={styles.chaptersHeading}>Chapter: {props.route.params.id}</Text>
             <Text style={styles.chapterNameHeading}>{props.route.params.chapterName}</Text>
             <View style={{flexDirection:'row-reverse'}}>
             <Text style={styles.topicHeading}>{props.route.params.topicName.slice(0,17)}</Text>

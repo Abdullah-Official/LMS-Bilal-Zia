@@ -7,18 +7,19 @@ import CountdownCircle from "react-native-countdown-circle";
 import { AntDesign } from "@expo/vector-icons";
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { ScrollView } from "react-native";
 
 const QuizAssignmentScreen = (props) => {
-
-    useEffect(() => {
-        LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
-    }, [])
+  useEffect(() => {
+    LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
+  }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState();
   const [score, setScore] = useState(0);
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(0);
+  const [color,setColor] = useState('')
   const navigation = useNavigation();
 
   const quizData = [
@@ -91,7 +92,7 @@ const QuizAssignmentScreen = (props) => {
 
   const handleNext = () => {
     if (currentIndex > 8) {
-      alert(score)
+      alert(score);
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
       setSelected();
@@ -102,21 +103,9 @@ const QuizAssignmentScreen = (props) => {
     setSelected(v);
     if (v === quizData[currentIndex]?.correct_answer) {
       setScore(score + 10);
-      setProgress(progress + 0.1)
+      setProgress(progress + 0.1);
     }
   };
-
-  //   const handleNext = () =>{
-  //     if(currQues > quizData.length){
-  //       setShowScore(true);
-  //     }
-  //     else if(selected){
-  //       setcurrQues(currQues+1);
-  //       setSelected();
-  //     }else{
-  //       alert('please select an opt first')
-  //     }
-  //   }
 
   const handleShuffle = (optionss) => {
     return optionss.sort(() => Math.random() - 0.5);
@@ -134,8 +123,9 @@ const QuizAssignmentScreen = (props) => {
     }
   };
 
-  console.log(progress)
 
+  console.log(progress);
+const title = props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View
@@ -147,7 +137,7 @@ const QuizAssignmentScreen = (props) => {
         }}
       >
         <HeaderApp
-          title={props.route.params.topicActivities.topicName}
+          title={`${title.slice(0,13)} ..`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -157,22 +147,23 @@ const QuizAssignmentScreen = (props) => {
             borderColor={"transparent"}
             unfilledColor={"white"}
             height={8}
-            progress={
-                0.7
-            }
+            progress={progress}
             width={200}
           />
         </View>
       </View>
+      
       <View
         style={{
           flex: 5,
           backgroundColor: "#fff",
-          marginHorizontal: 6,
-          marginVertical: 10,
-          borderRadius: 24,
+          borderRadius: 22,
+          marginTop:20,
+          marginHorizontal:7,
+          marginVertical:7
         }}
       >
+          <ScrollView>
         <View style={{ marginHorizontal: 15, marginVertical: 20 }}>
           <View
             style={{
@@ -193,7 +184,7 @@ const QuizAssignmentScreen = (props) => {
                 bgColor="#fff"
                 height={20}
                 textStyle={{ fontSize: 20 }}
-                onTimeElapsed={() => console.log("Elapsed!")}
+                onTimeElapsed={() => alert("Time Over")}
               />
             </View>
           </View>
@@ -245,6 +236,7 @@ const QuizAssignmentScreen = (props) => {
             <Text style={styles.nxtTxt}>Next</Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </View>
     </View>
   );

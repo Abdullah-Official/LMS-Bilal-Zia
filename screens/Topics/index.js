@@ -6,7 +6,7 @@ import TopicBox from "../../components/TopicBox";
 import styles from '../Chapters/styles'
 
 const Topics = ({route}) => {
-    // console.log("topics ", route.params)
+    console.log("topics ", route.params)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" , justifyContent:'center'}}>
@@ -39,6 +39,7 @@ const Topics = ({route}) => {
                   topicName={v.topicName}
                   topicNumber={v.topicNumber}
                   class={route.params.class}
+                  id={route.params.id}
                   topicDetails={v.content}
                   chapterName={route.params.name}
                 />

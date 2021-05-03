@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   quiz_main: {
     paddingTop: 10,
-    width: 270,
+    width: 275,
   },
   questionTxt: {
     textAlign: "justify",
