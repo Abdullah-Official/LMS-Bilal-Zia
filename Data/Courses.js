@@ -21,12 +21,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -42,12 +42,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -63,12 +63,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -84,12 +84,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -113,12 +113,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -134,12 +134,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -155,12 +155,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -176,12 +176,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -205,12 +205,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -226,12 +226,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -247,12 +247,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -268,12 +268,12 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
+                navigation: "QuizAssignmentScreen",
                 content: "Assignments",
                 image: require("../assets/assignment.png"),
               },
               {
-                navigation: "Quiz",
+                navigation: "QuizAssignmentScreen",
                 content: "Quiz",
                 image: require("../assets/online-quiz.png"),
               },
@@ -305,8 +305,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -326,8 +326,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -347,8 +347,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -368,8 +368,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -397,8 +397,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -418,8 +418,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -439,8 +439,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -460,8 +460,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -489,8 +489,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -510,8 +510,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -531,8 +531,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -552,8 +552,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -589,8 +589,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -610,8 +610,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -631,8 +631,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -652,8 +652,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -681,8 +681,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -702,8 +702,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -723,8 +723,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -744,8 +744,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -773,8 +773,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -794,8 +794,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -815,8 +815,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -836,8 +836,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -873,8 +873,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -894,8 +894,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -915,8 +915,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -936,8 +936,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -965,8 +965,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -986,8 +986,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "Assignment",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1007,8 +1007,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1028,8 +1028,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1057,8 +1057,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1078,8 +1078,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1099,8 +1099,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {
@@ -1120,8 +1120,8 @@ export const CoursesData = [
                 image: require("../assets/video-lecture.png"),
               },
               {
-                navigation: "Assignments",
-                content: "Assignments",
+                navigation: "QuizAssignmentScreen",
+                content: "QuizAssignmentScreen",
                 image: require("../assets/assignment.png"),
               },
               {

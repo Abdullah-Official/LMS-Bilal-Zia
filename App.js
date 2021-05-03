@@ -34,6 +34,7 @@ import Notifications from "./screens/notifications";
 import InstructorScreen from "./screens/instructor";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import QuizAssignmentScreen from "./screens/assign-quiz-screen";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -65,6 +66,7 @@ export default function App() {
       }}
     >
       <SearchStack.Screen name="Purchases" component={Purchases} />
+      <SearchStack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
     </SearchStack.Navigator>
   );
   const ProfileStackScreens = () => (
@@ -82,6 +84,7 @@ export default function App() {
       <ProfileStack.Screen name="Topics" component={Topics} />
       <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
       <ProfileStack.Screen name="VideoLecture" component={VideoLecture} />
+      <ProfileStack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
       <ProfileStack.Screen name="AllCourses" component={AllCourses} />
       <ProfileStack.Screen name="CourseDetails" component={CourseDetails} />
       <ProfileStack.Screen
@@ -102,6 +105,7 @@ export default function App() {
     >
       <Tabs.Screen name="Home" component={HomeStackScreens} />
       <Tabs.Screen name="Notifications" component={Notifications} />
+      <Tabs.Screen name="AllCourses" component={AllCourses} />
       <Tabs.Screen name="Profile" component={ProfileStackScreens} />
     </Tabs.Navigator>
   );
@@ -109,7 +113,7 @@ export default function App() {
   const Drawer = createDrawerNavigator();
 
   const [isLoading, setIsLoading] = React.useState();
-  const [userToken, setUserToken] = React.useState();
+  const [userToken, setUserToken] = React.useState('abd');
   const [progress, setProgress] = React.useState(new Animated.Value(0));
   const scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -172,6 +176,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen name="InstrutorScreen" component={InstructorScreen} />
           <Stack.Screen name="Purchases" component={Purchases} />
+          <Stack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>
       </Animated.View>
