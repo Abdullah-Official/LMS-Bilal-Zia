@@ -96,6 +96,33 @@ const styles = StyleSheet.create({
     color: "#315668",
     fontSize: 15,
   },
+  boldTxt:{
+    fontFamily:'PoppinsMedium',
+    fontSize:16,
+    color:'#000'
+    
+  },
+  lightTxt:{
+    fontFamily:'PoppinsMedium',
+    fontSize:12,
+    color:'#8E8E8E'
+  },
+  btnRetry : {
+    borderColor: '#315668',
+    borderWidth:2,
+    width: 170,
+    alignItems:'center',
+    borderRadius:12,
+    justifyContent:'center'
+  },
+  retryTxt:{
+    color: '#315668',
+    paddingHorizontal:20,
+    fontSize:15,
+    fontFamily:'PoppinsMedium',
+    paddingTop: 8,
+    paddingBottom:2
+  }
 });
 
 export default styles;

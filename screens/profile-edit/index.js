@@ -20,16 +20,13 @@ const ProfileEdit = () => {
   return (
     <>
       <ScrollView
-        style={{ flex: 1, backgroundColor: "#fff" }}
+        style={{ flex: 1, backgroundColor: "#fff", width:'100%' }}
         keyboardShouldPersistTaps={"handled"}
         bounces={false}
         scrollEnabled={true}
-        style={{
-          width: "100%",
-        }}
       >
         <KeyboardAvoidingView
-          style={{ backgroundColor: "#fff" }}
+          style={{flex:1, backgroundColor: "#fff" }}
           enabled
           keyboardVerticalOffset={-500}
           behavior="padding"
@@ -48,8 +45,8 @@ const ProfileEdit = () => {
               >
                 <View style={{ justifyContent: "center", marginTop: 30 }}>
                   <HeaderApp
-                    iconLeft={require("../../assets/nav-con.png")}
-                    nav="drawer"
+                    iconLeft={require("../../assets/back-arrow-white.png")}
+                    nav="back"
                     title="Profile"
                   />
                 </View>
@@ -67,12 +64,12 @@ const ProfileEdit = () => {
                 </View>
               </ImageBackground>
             </View>
-            <View style={{ marginTop: 30, marginHorizontal: 25 }}>
+            <View style={{ marginTop: 30, marginHorizontal: 25, backgroundColor:'#fff' }}>
               <View style={{ marginBottom: 20 }}>
                 <Text style={styles.textDark}>Name</Text>
                 <TextInput style={styles.input} value={"Marry Jane"} />
               </View>
-              <View style={{ marginBottom: 20 }}>
+              <View style={{ marginBottom: 20, backgroundColor:'#fff' }}>
                 <Text style={styles.textDark}>Password</Text>
                 <TextInput
                   style={styles.input}
@@ -96,7 +93,7 @@ const ProfileEdit = () => {
                   placeholder="Confirm new password"
                 />
               </View>
-              <View style={{ marginVertical: 10, alignItems: "center" }}>
+              <View style={{ marginVertical: 10, alignItems: "center", backgroundColor:'#fff' }}>
                 <TouchableOpacity style={styles.btnBuy} activeOpacity={0.6}>
                   <Text style={styles.buyTxt}>SAVE</Text>
                 </TouchableOpacity>

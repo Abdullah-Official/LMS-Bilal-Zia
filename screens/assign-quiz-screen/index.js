@@ -8,6 +8,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { ScrollView } from "react-native";
+import { Content, Card, CardItem, Body } from "native-base";
+import {quizData} from '../../Data/quiz'
 
 const QuizAssignmentScreen = (props) => {
   useEffect(() => {
@@ -19,68 +21,10 @@ const QuizAssignmentScreen = (props) => {
   const [selected, setSelected] = useState();
   const [score, setScore] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [color,setColor] = useState('')
+  const [solution, setSolution] = useState(false);
   const navigation = useNavigation();
 
-  const quizData = [
-    {
-      question:
-        "Which best selling toy of 1983 caused hysteria, resulting in riots breaking out in stores?",
-      correct_answer: "Cabbage Patch Kids",
-      incorrect_answers: ["Transformers", "Care Bears", "Rubik&rsquo;s Cube"],
-    },
-    {
-      question: "In past times, what would a gentleman keep in his fob pocket?",
-      correct_answer: "Watch",
-      incorrect_answers: ["Money", "Keys", "Notebook"],
-    },
-    {
-      question: "Which American president appears on a one dollar bill?",
-      correct_answer: "George Washington",
-      incorrect_answers: [
-        "Thomas Jefferson",
-        "Abraham Lincoln",
-        "Benjamin Franklin",
-      ],
-    },
-    {
-      question: "What is the nickname of the US state of California?",
-      correct_answer: "Golden State",
-      incorrect_answers: ["Sunshine State", "Bay State", "Treasure State"],
-    },
-    {
-      question: "Which candy is NOT made by Mars?",
-      correct_answer: "Almond Joy",
-      incorrect_answers: ["M&amp;M&#039;s", "Twix", "Snickers"],
-    },
-    {
-      question: "When someone is inexperienced they are said to be what color?",
-      correct_answer: "Green",
-      incorrect_answers: ["Red", "Blue", "Yellow"],
-    },
-    {
-      question:
-        "If you are caught &quot;Goldbricking&quot;, what are you doing wrong?",
-      correct_answer: "Slacking",
-      incorrect_answers: ["Smoking", "Stealing", "Cheating"],
-    },
-    {
-      question: "What is the closest planet to our solar system&#039;s sun?",
-      correct_answer: "Mercury",
-      incorrect_answers: ["Mars", "Jupiter", "Earth"],
-    },
-    {
-      question: "The Canadian $1 coin is colloquially known as a what?",
-      correct_answer: "Loonie",
-      incorrect_answers: ["Boolie", "Foolie", "Moodie"],
-    },
-    {
-      question: "What is the French word for &quot;fish&quot;?",
-      correct_answer: "poisson",
-      incorrect_answers: ["fiche", "escargot", "mer"],
-    },
-  ];
-
+  
   useEffect(() => {
     setOptions(
       handleShuffle([
@@ -92,11 +36,12 @@ const QuizAssignmentScreen = (props) => {
 
   const handleNext = () => {
     if (currentIndex > 8) {
-      alert(score);
+      navigation.navigate("QuizAssignmentResult", {props,score})
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
       setSelected();
-    } else alert("ERR");
+      setSolution(false);
+    } else alert("Please select atleast one option.");
   };
 
   const handleCheck = (v) => {
@@ -105,6 +50,7 @@ const QuizAssignmentScreen = (props) => {
       setScore(score + 10);
       setProgress(progress + 0.1);
     }
+    setSolution(true);
   };
 
   const handleShuffle = (optionss) => {
@@ -123,9 +69,8 @@ const QuizAssignmentScreen = (props) => {
     }
   };
 
-
   console.log(progress);
-const title = props.route.params.topicActivities.topicName;
+  const title = props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View
@@ -137,7 +82,7 @@ const title = props.route.params.topicActivities.topicName;
         }}
       >
         <HeaderApp
-          title={`${title.slice(0,13)} ..`}
+          title={`${title.slice(0, 13)} ..`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -152,90 +97,116 @@ const title = props.route.params.topicActivities.topicName;
           />
         </View>
       </View>
-      
+
       <View
         style={{
           flex: 5,
           backgroundColor: "#fff",
           borderRadius: 22,
-          marginTop:20,
-          marginHorizontal:7,
-          marginVertical:7
+          marginTop: 20,
+          marginHorizontal: 7,
+          marginVertical: 7,
         }}
       >
-          <ScrollView>
-        <View style={{ marginHorizontal: 15, marginVertical: 20 }}>
+        <ScrollView>
+          <View style={{ marginHorizontal: 15, marginVertical: 20 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: 10,
+              }}
+            >
+              <View style={{ paddingTop: 10 }}>
+                <Text style={styles.pointsTxt}>20pts</Text>
+              </View>
+              <View style={{ position: "absolute", top: 0, right: 20 }}>
+                <CountdownCircle
+                  seconds={quizData.length * 10}
+                  radius={30}
+                  borderWidth={5}
+                  color="#FFA24B"
+                  bgColor="#fff"
+                  height={20}
+                  textStyle={{ fontSize: 20 }}
+                  onTimeElapsed={() => [alert("Quiz time over .."), navigation.navigate("QuizAssignmentResult")]}
+                />
+              </View>
+            </View>
+          </View>
+          <View style={styles.quiz_container}>
+            <View style={styles.quiz_main}>
+              <Text style={styles.questionTxt}>
+                {quizData[currentIndex].question}
+              </Text>
+            </View>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <View>
+              <View style={{ alignItems: "center", marginTop: 14 }}>
+                {options.map((v, i) => (
+                  <TouchableOpacity
+                    onPress={() => handleCheck(v)}
+                    activeOpacity={0.5}
+                    style={
+                      selected
+                        ? [styles.answers_box, handleSelect(v)]
+                        : styles.answers_box
+                    }
+                  >
+                    <View>
+                      <Text>{v}</Text>
+                    </View>
+                    <View style={{ justifyContent: "center" }}>
+                      <AntDesign name="right" size={19} color="black" />
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+          </View>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 10,
+              justifyContent: "space-around",
+              marginHorizontal: 32,
+              marginVertical: 20,
+              marginBottom: 8,
             }}
           >
-            <View style={{ paddingTop: 10 }}>
-              <Text style={styles.pointsTxt}>20pts</Text>
-            </View>
-            <View style={{ position: "absolute", top: 0, right: 20 }}>
-              <CountdownCircle
-                seconds={quizData.length * 10}
-                radius={30}
-                borderWidth={5}
-                color="#FFA24B"
-                bgColor="#fff"
-                height={20}
-                textStyle={{ fontSize: 20 }}
-                onTimeElapsed={() => alert("Time Over")}
-              />
-            </View>
+            <TouchableOpacity
+              onPress={handleNext}
+              activeOpacity={0.7}
+              style={styles.btnNext}
+            >
+              <Text style={styles.nxtTxt}>Next</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.quiz_container}>
-          <View style={styles.quiz_main}>
-            <Text style={styles.questionTxt}>
-              {quizData[currentIndex].question}
-            </Text>
+          <View style={{ marginVertical: 13, marginHorizontal: 12 }}>
+            {solution ? (
+              <Content>
+                <Card>
+                  <CardItem header bordered>
+                    <Text
+                      style={{ color: "#386A82", textTransform: "uppercase" }}
+                    >
+                      Solution
+                    </Text>
+                  </CardItem>
+                  <CardItem bordered>
+                    <Body>
+                      <Text>
+                        NativeBase is a free and open source framework that
+                        enable developers to build high-quality mobile apps
+                        using React Native iOS and Android apps with a fusion of
+                        ES6.
+                      </Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              </Content>
+            ) : null}
           </View>
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <View>
-            <View style={{ alignItems: "center", marginTop: 14 }}>
-              {options.map((v, i) => (
-                <TouchableOpacity
-                  onPress={() => handleCheck(v)}
-                  activeOpacity={0.5}
-                  style={
-                    selected
-                      ? [styles.answers_box, handleSelect(v)]
-                      : styles.answers_box
-                  }
-                >
-                  <View>
-                    <Text>{v}</Text>
-                  </View>
-                  <View style={{ justifyContent: "center" }}>
-                    <AntDesign name="right" size={19} color="black" />
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginHorizontal: 32,
-            marginVertical: 40,
-          }}
-        >
-          <TouchableOpacity
-            onPress={handleNext}
-            activeOpacity={0.7}
-            style={styles.btnNext}
-          >
-            <Text style={styles.nxtTxt}>Next</Text>
-          </TouchableOpacity>
-        </View>
         </ScrollView>
       </View>
     </View>

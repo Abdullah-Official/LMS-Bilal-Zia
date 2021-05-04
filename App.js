@@ -32,9 +32,10 @@ import CourseDetails from "./screens/course-details";
 import ProfileEdit from "./screens/profile-edit";
 import Notifications from "./screens/notifications";
 import InstructorScreen from "./screens/instructor";
-import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Feather, Ionicons, Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import QuizAssignmentScreen from "./screens/assign-quiz-screen";
+import QuizAssignmentResult from "./screens/quiz-assign-result";
 
 export default function App() {
   const AuthStack = createStackNavigator();
@@ -66,7 +67,10 @@ export default function App() {
       }}
     >
       <SearchStack.Screen name="Purchases" component={Purchases} />
-      <SearchStack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
+      <SearchStack.Screen
+        name="QuizAssignmentScreen"
+        component={QuizAssignmentScreen}
+      />
     </SearchStack.Navigator>
   );
   const ProfileStackScreens = () => (
@@ -79,12 +83,14 @@ export default function App() {
       }}
     >
       <ProfileStack.Screen name="Profile" component={Profile} />
-      <ProfileStack.Screen name="ProfileEdit" component={ProfileEdit} />
       <ProfileStack.Screen name="Chapters" component={Chapters} />
       <ProfileStack.Screen name="Topics" component={Topics} />
       <ProfileStack.Screen name="TopicDetails" component={TopicDetails} />
       <ProfileStack.Screen name="VideoLecture" component={VideoLecture} />
-      <ProfileStack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
+      <ProfileStack.Screen
+        name="QuizAssignmentScreen"
+        component={QuizAssignmentScreen}
+      />
       <ProfileStack.Screen name="AllCourses" component={AllCourses} />
       <ProfileStack.Screen name="CourseDetails" component={CourseDetails} />
       <ProfileStack.Screen
@@ -102,18 +108,60 @@ export default function App() {
         headerTitle: null,
         headerShown: false,
       }}
+      tabBarOptions={{
+        activeTintColor: "#335A6D",
+        showLabel: false,
+        style: {
+          // paddingTop: 15,
+          paddingHorizontal: Platform.OS === "ios" ? 5 : null,
+          height: Platform.OS === "ios" ? 73 : 68,
+        },
+      }}
     >
-      <Tabs.Screen name="Home" component={HomeStackScreens} />
-      <Tabs.Screen name="Notifications" component={Notifications} />
-      <Tabs.Screen name="AllCourses" component={AllCourses} />
-      <Tabs.Screen name="Profile" component={ProfileStackScreens} />
+      <Tabs.Screen
+        name="Home"
+        component={HomeStackScreens}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Entypo name="home" size={25} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="AllCourses"
+        component={AllCourses}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Feather name="list" size={25} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="notifications" size={25} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={ProfileStackScreens}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="user" size={25} color={color} />
+          ),
+        }}
+      />
     </Tabs.Navigator>
   );
 
   const Drawer = createDrawerNavigator();
 
   const [isLoading, setIsLoading] = React.useState();
-  const [userToken, setUserToken] = React.useState('abd');
+  const [userToken, setUserToken] = React.useState();
   const [progress, setProgress] = React.useState(new Animated.Value(0));
   const scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -176,7 +224,15 @@ export default function App() {
           <Stack.Screen name="Profile" component={ProfileStackScreens} />
           <Stack.Screen name="InstrutorScreen" component={InstructorScreen} />
           <Stack.Screen name="Purchases" component={Purchases} />
-          <Stack.Screen name="QuizAssignmentScreen" component={QuizAssignmentScreen} />
+          <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
+          <Stack.Screen
+            name="QuizAssignmentScreen"
+            component={QuizAssignmentScreen}
+          />
+          <Stack.Screen
+            name="QuizAssignmentResult"
+            component={QuizAssignmentResult}
+          />
           <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>
       </Animated.View>
@@ -340,7 +396,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     justifyContent: "center",
   },
-  // drawerItem: { alignItems: "flex-start", marginVertical: 0 },
   drawerLabel: {
     color: "#fff",
     marginLeft: -16,
