@@ -7,7 +7,7 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SignIn from "./screens/signin";
 import SignUp from "./screens/signup";
 import Home from "./screens/Home";
@@ -36,15 +36,31 @@ import { AntDesign, Feather, Ionicons, Entypo } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import QuizAssignmentScreen from "./screens/assign-quiz-screen";
 import QuizAssignmentResult from "./screens/quiz-assign-result";
+import { QueryClient, QueryClientProvider } from 'react-query';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {Provider, useSelector} from 'react-redux'
+import { store } from "./app/store";
+import { logout, userInfo, userToken } from "./reducers/userReducer";
+import { useDispatch } from "react-redux";
 
-export default function App() {
+function App({navigation}) {
   const AuthStack = createStackNavigator();
   const Tabs = createBottomTabNavigator();
   const HomeStack = createStackNavigator();
   const SearchStack = createStackNavigator();
   const ProfileStack = createStackNavigator();
   const Stack = createStackNavigator();
-
+  // const navigation = useNavigation()
+  const state = useSelector(state => state.user)
+  console.log("user data ", state)
+  const [token, setToken] = useState('')
+  const dispatch = useDispatch()
+  // console.log("main token ", token)
+  useEffect(() => {
+    dispatch(userInfo())
+    dispatch(userToken())
+  }, [])
+ 
   const HomeStackScreens = () => (
     <HomeStack.Navigator
       headerMode="none"
@@ -161,7 +177,6 @@ export default function App() {
   const Drawer = createDrawerNavigator();
 
   const [isLoading, setIsLoading] = React.useState();
-  const [userToken, setUserToken] = React.useState();
   const [progress, setProgress] = React.useState(new Animated.Value(0));
   const scale = Animated.interpolateNode(progress, {
     inputRange: [0, 1],
@@ -174,19 +189,19 @@ export default function App() {
 
   const animatedStyle = { borderRadius, transform: [{ scale }] };
 
-  const authContext = React.useMemo(() => {
-    return {
-      signIn: () => {
-        setIsLoading(false), setUserToken("abd");
-      },
-      signUp: () => {
-        setIsLoading(false), setUserToken("abd");
-      },
-      signOut: () => {
-        setIsLoading(false), setUserToken(null);
-      },
-    };
-  }, []);
+  // const authContext = React.useMemo(() => {
+  //   return {
+  //     signIn: () => {
+  //       setIsLoading(false), setUserToken("abd");
+  //     },
+  //     signUp: () => {
+  //       setIsLoading(false), setUserToken("abd");
+  //     },
+  //     signOut: () => {
+  //       setIsLoading(false), setUserToken(null);
+  //     },
+  //   };
+  // }, []);
 
   // React.useEffect(() => {
   //   setTimeout(() => {
@@ -241,8 +256,10 @@ export default function App() {
 
   function CustomDrawerContent(props) {
     // const navigation = useNavigation()
+    const dispatch = useDispatch()
     return (
       <>
+      
         <View style={{ position: "absolute", bottom: 200, right: 40 }}>
           <Image source={require("./assets/dot_design.png")} />
         </View>
@@ -288,7 +305,7 @@ export default function App() {
             />
             <DrawerItem
               label="Log Out"
-              onPress={authContext.signOut}
+              onPress={() => dispatch(logout())}
               labelStyle={styles.drawerLabel}
               style={styles.drawerItem}
               icon={() => <Feather name="log-out" size={24} color="white" />}
@@ -298,7 +315,6 @@ export default function App() {
       </>
     );
   }
-  console.log(authContext);
   let [fontsLoaded] = useFonts({
     PoppinsSemiBold: require("./fonts/Poppins/Poppins-SemiBold.ttf"),
     PoppinsMedium: require("./fonts/Poppins/Poppins-Medium.ttf"),
@@ -311,9 +327,11 @@ export default function App() {
     return <AppLoading />;
   } else {
     return (
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-          {userToken ? (
+        <> 
+        {
+          state.token  ?
+          (
+            <NavigationContainer>
             <ImageBackground
               style={{
                 flex: 1,
@@ -351,8 +369,11 @@ export default function App() {
               </Drawer.Navigator>
               {/* </LinearGradient> */}
             </ImageBackground>
+            
+        </NavigationContainer>
           ) : (
-            <AuthStack.Navigator
+<NavigationContainer>
+          <AuthStack.Navigator
               headerMode="none"
               screenOptions={{
                 headerTransparent: true,
@@ -368,9 +389,11 @@ export default function App() {
               <AuthStack.Screen name="SignIn" component={SignIn} />
               <AuthStack.Screen name="SignUp" component={SignUp} />
             </AuthStack.Navigator>
-          )}
         </NavigationContainer>
-      </AuthContext.Provider>
+          )
+        }
+        
+        </>
     );
   }
 }
@@ -403,3 +426,15 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
+
+
+export default  () => {
+  const queryClient = new QueryClient()
+  return (
+    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+    <App />
+    </Provider>
+  </QueryClientProvider>
+  )
+}

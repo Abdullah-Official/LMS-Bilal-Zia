@@ -4,15 +4,23 @@ import { KeyboardAvoidingView } from 'react-native'
 import { ImageBackground } from 'react-native'
 import {Text, View } from 'react-native'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
-import { AuthContext } from '../../context'
 import styles from '../signin/styles'
+import { useMutation } from 'react-query'
+import axios from 'axios';
+
 
 const SignUp = ({navigation}) => {
-    const {signUp} = React.useContext(AuthContext)
     const [name, setName] = useState()
     const [email, setEmail] = useState()
+    const [phone, setPhone] = useState()
     const [password, setPassword] = useState()
     const [cpassword, setCPassword] = useState()
+    const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signup', post))
+
+    const authenticate = () => {
+          mutation.mutate({name,email,phone,password,cpassword})
+  }
+
 
     return (
       <>
@@ -36,7 +44,9 @@ const SignUp = ({navigation}) => {
                  <View style={{ flex: 1, marginHorizontal: 20 }}>
                  <View style={{ paddingTop: 110 }}>
                   <Text style={styles.login_heading}>Sign Up</Text>
+                  <Text>{mutation.isSuccess ? ("Signed up") : ("not sign up")}</Text>
                 </View>
+                {/* <Text>{error}</Text> */}
                 <View style={{marginHorizontal:20, marginTop:20}}>
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Name</Text>
@@ -56,7 +66,15 @@ const SignUp = ({navigation}) => {
                     placeholderTextColor="white"
                   />
                   </View>
-                  
+                  <View style={styles.input_container}>
+                  <Text style={styles.placholder}>Phone</Text>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={(e) => setPhone(e)}
+                    value={phone}
+                    placeholderTextColor="white"
+                  />
+                  </View>
                  <View style={styles.input_container}>
                  <Text style={styles.placholder}>Password</Text>
                   <TextInput
@@ -79,12 +97,8 @@ const SignUp = ({navigation}) => {
                  </View>
                 </View>
                 <View style={{marginVertical:15,}}>
-                    <TouchableOpacity onPress={() => signUp()} activeOpacity={0.7} style={styles.btn_container}>
+                    <TouchableOpacity onPress={authenticate} disabled={password !== cpassword ? true : false}  activeOpacity={0.7} style={styles.btn_container}>
                         <Text style={styles.btn_txt}>Sign up</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.or_txt}>or</Text>
-                    <TouchableOpacity onPress={() => signUp()} activeOpacity={0.7} style={styles.btn2_container}>
-                        <Text style={styles.btn2_txt}>Sign up with Google</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SignIn")} style={styles.account_container}>
                       <Text style={styles.accTxt}>Already have an Account?</Text>

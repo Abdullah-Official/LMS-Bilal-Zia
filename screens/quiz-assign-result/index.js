@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/core";
 
 const QuizAssignmentResult = (props) => {
   const navigation = useNavigation();
-  const title = props.route.params.props.route.params.topicActivities.topicName;
+  // const title = props.route.params.props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
@@ -21,7 +21,7 @@ const QuizAssignmentResult = (props) => {
         }}
       >
         <HeaderApp
-          title={`${title.slice(0, 13)} ..`}
+          // title={`${title.slice(0, 13)} ..`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -34,14 +34,14 @@ const QuizAssignmentResult = (props) => {
         >
           <View style={{ alignItems: "center" }}>
             <ProgressCircle
-              percent={props.route.params.score}
+              // percent={props.route.params.score}
               radius={65}
               borderWidth={12}
               color="#FFA24B"
               shadowColor="#ccc"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 25 }}>{props.route.params.score}</Text>
+              {/* <Text style={{ fontSize: 25 }}>{props.route.params.score}</Text> */}
               <Text
                 style={{
                   fontFamily: "PoppinsMedium",

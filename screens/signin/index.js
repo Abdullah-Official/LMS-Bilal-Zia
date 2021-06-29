@@ -6,14 +6,32 @@ import { ImageBackground, Image } from 'react-native'
 import { Text, View } from 'react-native'
 import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import styles from './styles';
-import { AuthContext } from '../../context'
-
+import axios from 'axios';
+import { useMutation } from 'react-query'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useDispatch } from 'react-redux'
+import { userInfo, userToken } from '../../reducers/userReducer'
 
 const Signin = ({navigation}) => {
-
+  const dispatch = useDispatch()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    const {signIn} = React.useContext(AuthContext)
+
+    const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signin', post), {
+      onSuccess: data =>{
+        console.log(data.data.message)
+        AsyncStorage.setItem('token', data.data.token)
+        dispatch(userInfo(data.data.message))
+        dispatch(userToken( data.data.token))
+      }
+    })
+
+    const authenticate = () => {
+      // dispatch(signinUser({email,password}))
+      mutation.mutate({ email, password })
+}
+
+   
     return (
       <>
         <ImageBackground
@@ -40,8 +58,10 @@ const Signin = ({navigation}) => {
                   />
                 </View>
                 <View style={{ paddingTop: 40 }}>
-                  <Text style={styles.login_heading}>Login In</Text>
+                  <Text style={styles.login_heading}>Login</Text>
+                  <Text>{mutation.isSuccess ? ("Logged inn") : ("not logged inn")}</Text>
                 </View>
+                {/* <Text style={{textAlign:'center', color:"red", fontWeight:'bold'}}>{name}</Text> */}
                 <View style={{marginHorizontal:20, marginTop:20}}>
                   <View style={styles.input_container}>
                   <Text style={styles.placholder}>Email</Text>
@@ -65,12 +85,8 @@ const Signin = ({navigation}) => {
                  </View>
                 </View>
                 <View style={{marginVertical:15, alignItems:'center'}}>
-                    <TouchableOpacity  onPress={() => signIn()} activeOpacity={0.7} style={styles.btn_container}>
+                    <TouchableOpacity onPress={authenticate}   activeOpacity={0.7} style={styles.btn_container}>
                         <Text style={styles.btn_txt}>Login in</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.or_txt}>or</Text>
-                    <TouchableOpacity onPress={() => signIn()} activeOpacity={0.7} style={styles.btn2_container}>
-                        <Text style={styles.btn2_txt}>Login in with Google</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SignUp")} style={styles.account_container}>
                       <Text style={styles.accTxt}>Create Account?</Text>

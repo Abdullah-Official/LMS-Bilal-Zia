@@ -6,12 +6,12 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 
 const Chapters = ({ route }) => {
-  // console.log(route.params.chapters, " chapters data")
+  console.log(route.params, " chapters data")
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center'}}>
         <HeaderApp
-          title={route.params.grade}
+          title={`CLASS ${route.params.grade}`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -32,7 +32,7 @@ const Chapters = ({ route }) => {
          {
            route.params.chapters.map((v,i) => {
              return (
-               <ChaptersBox key={i}  name={v.name} id={v.id} topics={v.topics} class={v.class}   />
+               <ChaptersBox key={i} grade={route.params.grade}  name={v.chapterName} id={v.chapterNumber} topics={v.topics} class={v.grade}   />
              )
            })
          }

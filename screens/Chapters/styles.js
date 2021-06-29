@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     backgroundColor: "#EFEFEF",
     width: "80%",
-    padding: 14,
+    paddingVertical: 14,
     borderRadius: 13,
     marginBottom: 13,
     shadowColor: "#000",

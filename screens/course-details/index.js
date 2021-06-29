@@ -23,7 +23,7 @@ const CourseDetails = (props) => {
                 />
               </View>
               <View style={styles.header_content}>
-                  <Text style={styles.header_content_text}>{props.route.params.grade}</Text>
+                  <Text style={styles.header_content_text}>CLASS {props.route.params.grade}</Text>
                   <Text style={styles.header_content_text}>Rs 599</Text>
               </View>
               <View>

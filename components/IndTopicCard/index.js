@@ -6,6 +6,7 @@ import styles from './styles'
 
 const IndTopicCard = (props) => {
     const navigation = useNavigation()
+    // console.log("ind ", props)
     // console.log("data ", props)
     return (
         <View style={{alignItems:'center', marginHorizontal:30}}>

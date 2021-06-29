@@ -5,16 +5,18 @@ import HeaderApp from '../../components/Header'
 import styles from './styles'
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { Button } from 'react-native'
+import { WebView } from 'react-native-webview';
 
 const VideoLecture = (props) => {
+  // console.log("Video lecture ", props)
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
-    // console.log("Video ", props.route.params.topicActivities.topicName)
+    console.log("Video ", props.route.params)
     return (
       <View style={{ flex: 1, backgroundColor: "#315566" }}>
         <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center' }}>
           <HeaderApp
-            title={props.route.params.topicActivities.class}
+            title={`CLASS ${props.route.params.grade}`}
             iconLeft={require("../../assets/back-arrow-white.png")}
             nav="back"
           />
@@ -36,11 +38,11 @@ const VideoLecture = (props) => {
               }}
             >
               <Text style={styles.chaptersHeading}>
-                Chapter: {props.route.params.topicActivities.topicNumber}
+                Chapter: {props.route.params.chapterNumber}
               </Text>
               <View style={{ flexDirection: "row-reverse" }}>
                 <Text style={styles.topicHeading}>
-                  {props.route.params.topicActivities.topicName.slice(0, 17)}
+                {` ${props.route.params.topicName}`}
                 </Text>
                 <Text style={styles.topicTxt}>Topic: </Text>
               </View>
@@ -48,18 +50,11 @@ const VideoLecture = (props) => {
             <View style={{ marginTop: 40 }}>
               <Text style={styles.videoLectureHeading}>Video Lecture</Text>
               <View style={{marginTop:20, alignItems:'center'}}>
-                <Video
-                  ref={video}
-                  style={{height:200, width:'90%'}}
-                  source={require('../../assets/lecture.mp4')}
-                  useNativeControls
-                  resizeMode="contain"
-                  isLooping
-                />
+                <WebView source={{ uri: props.route.params.video}} allowsFullscreenVideo={true} style={{width: 300, height:250, resizeMode:'cover', alignItems:'center', borderRadius:10}} />
               </View>
               <View style={{alignItems:'center', marginHorizontal:24, marginVertical:20}}>
                   <Text style={styles.descHeading}>Topic Description</Text>
-                  <Text style={styles.descTxt}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+                  <Text style={styles.descTxt}>{props.route.params.topicDescription}</Text>
               </View>
             </View>
           </ScrollView>

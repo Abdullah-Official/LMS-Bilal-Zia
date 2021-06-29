@@ -7,8 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const CoursesBox = (props) => {
   const navigation = useNavigation()
-  console.log(props.enrolled)
-  const [buy, setBuy] = useState(props.enrolled)
+  // console.log(props.enrolled)
+  console.log("props ", props)
   return (
     <View>
       <TouchableOpacity
@@ -23,8 +23,8 @@ const CoursesBox = (props) => {
       >
         <View style={{ padding: 20 }}>
           <View>
-            <Text style={styles.course_class}>{props.grade}</Text>
-            <Text style={styles.course_about}>{props.about}</Text>
+            <Text style={styles.course_class}>CLASS {props.grade}</Text>
+            <Text style={styles.course_about}>{props.about.slice(0,39)}</Text>
           </View>
         </View>
         <View

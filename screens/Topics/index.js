@@ -11,7 +11,7 @@ const Topics = ({route}) => {
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566" , justifyContent:'center'}}>
         <HeaderApp
-          title={route.params.class}
+          title={`CLASS ${route.params.grade}`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -38,10 +38,13 @@ const Topics = ({route}) => {
                   key={i}
                   topicName={v.topicName}
                   topicNumber={v.topicNumber}
-                  class={route.params.class}
-                  id={route.params.id}
-                  topicDetails={v.content}
+                  quiz={v.quiz}
+                  assignment={v.assignment}
                   chapterName={route.params.name}
+                  chapterNumber={route.params.id}
+                  grade={route.params.grade}
+                  video={v.video}
+                  topicDescription={v.topicDescription}
                 />
               );
             })}

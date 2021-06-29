@@ -9,9 +9,10 @@ import { LogBox } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { ScrollView } from "react-native";
 import { Content, Card, CardItem, Body } from "native-base";
-import {quizData} from '../../Data/quiz'
+// import {quizData} from '../../Data/quiz'
 
 const QuizAssignmentScreen = (props) => {
+  console.log(props)
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
   }, []);
@@ -23,19 +24,20 @@ const QuizAssignmentScreen = (props) => {
   const [progress, setProgress] = useState(0);
   const [solution, setSolution] = useState(false);
   const navigation = useNavigation();
-
+  const quizData = props.route.params.quizData
+  // alert(quizData.length)
   
   useEffect(() => {
     setOptions(
       handleShuffle([
         quizData[currentIndex]?.correct_answer,
-        ...quizData[currentIndex]?.incorrect_answers,
+        ...quizData[currentIndex]?.incorrect_answer,
       ])
     );
   }, [currentIndex]);
 
   const handleNext = () => {
-    if (currentIndex > 8) {
+    if (currentIndex >= quizData.length) {
       navigation.navigate("QuizAssignmentResult", {props,score})
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
@@ -70,7 +72,7 @@ const QuizAssignmentScreen = (props) => {
   };
 
   console.log(progress);
-  const title = props.route.params.topicActivities.topicName;
+  // const title = props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View
@@ -82,7 +84,7 @@ const QuizAssignmentScreen = (props) => {
         }}
       >
         <HeaderApp
-          title={`${title.slice(0, 13)} ..`}
+          title={`Topic Name`}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -196,10 +198,7 @@ const QuizAssignmentScreen = (props) => {
                   <CardItem bordered>
                     <Body>
                       <Text>
-                        NativeBase is a free and open source framework that
-                        enable developers to build high-quality mobile apps
-                        using React Native iOS and Android apps with a fusion of
-                        ES6.
+                      {quizData[currentIndex].solution}
                       </Text>
                     </Body>
                   </CardItem>

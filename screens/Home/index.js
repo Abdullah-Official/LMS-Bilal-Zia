@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { StatusBar } from "react-native";
+import React, { useState, useEffect } from "react";
+import { FlatList, StatusBar } from "react-native";
 import { Image } from "react-native";
 import { ImageBackground } from "react-native";
 import { Text, View } from "react-native";
@@ -7,13 +7,31 @@ import CoursesBox from "../../components/Courses";
 import HeaderApp from "../../components/Header";
 import styles from "./styles";
 import { CoursesData } from "../../Data/Courses";
-import { FlatList } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
+import { useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchClasses } from "../../reducers/classReducer";
 
 const Home = () => {
-  const [enrolled] = useState(true);
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const state = useSelector(state => state.user)
+  const { isLoading, error, data } = useQuery('repoData', () =>
+  fetch(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`).then(res =>
+    res.json()
+  )
+)
+const classes = useSelector(state => state.classes)
+
+useEffect(() => {
+  dispatch(fetchClasses())
+}, [])
+
+
+// console.log(data, "QUERY")
+// if (isLoading) return 'Loading...'
+
   return (
     <>
       <ScrollView style={{backgroundColor:'#fff'}}>
@@ -40,7 +58,7 @@ const Home = () => {
                 <View style={styles.profile_container}>
                   <View>
                     <Text style={styles.helloTxt}>Hello,</Text>
-                    <Text style={styles.nameTxt}>Marry Jane</Text>
+                    <Text style={styles.nameTxt}>{state.user.name}</Text>
                   </View>
                   <View style={{ justifyContent: "center" }}>
                     <Image
@@ -57,14 +75,14 @@ const Home = () => {
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-              {enrolled === true ? (
+              {!isLoading ? (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  data={CoursesData}
+                  data={data.message}
                   renderItem={({ item }) => (
                     <CoursesBox
-                      id={item.id}
+                      id={item._id}
                       grade={item.grade}
                       about={item.about}
                       chapters={item.chapters}
@@ -87,13 +105,12 @@ const Home = () => {
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  data={CoursesData.slice(0,2)}
+                  data={classes}
                   renderItem={({ item }) => (
                     <CoursesBox
                       id={item.id}
                       grade={item.grade}
                       about={item.about}
-                      chapters={item.chapters}
                       navigation={"CourseDetails"}
                     />
                   )}
