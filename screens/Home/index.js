@@ -43,7 +43,7 @@ useEffect(() => {
     .catch(e => console.log("error ", e))
   }
 
-console.log(data, " Enrolled")
+// console.log(data, " Enrolled")
 
 
   return (
@@ -75,10 +75,28 @@ console.log(data, " Enrolled")
                     <Text style={styles.nameTxt}>{state.user.name}</Text>
                   </View>
                   <View style={{ justifyContent: "center" }}>
-                    <Image
-                      source={require("../../assets/profile-pic.png")}
-                      style={{ height: 40, width: 40, resizeMode: "contain" }}
-                    />
+                  <View 
+                style={{
+                  backgroundColor:'#234F8F',
+                  width:55,
+                  height:55,
+                  padding:6,
+                  justifyContent:'center',
+                  alignItems:'center',
+                  borderRadius:100
+                }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                      color:"#fff"
+                    }}
+                  >
+                    {state.user.name.slice(0, 2)}
+                  </Text>
+                </View>
                   </View>
                 </View>
                 <View style={{ marginTop: 80, marginHorizontal: 25 }}>
@@ -89,7 +107,7 @@ console.log(data, " Enrolled")
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-            {data  ? (
+            {data.length  ? (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}

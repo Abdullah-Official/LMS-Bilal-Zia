@@ -3,19 +3,19 @@ import { View, Text } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import styles from '../../screens/notifications/styles'
 
-const NotificationBox = (props) => {
+const NotificationBox = ({name,classNumber,description, bgAvatar}) => {
     return (
       <TouchableOpacity style={styles.container}>
         <View style={styles.maincard_container}>
           <View style={styles.left}>
-            <View style={styles.avatar , {...styles.avatar, backgroundColor: props.bgAvatar}}>
-              <Text style={styles.class}>IX</Text>
+            <View style={styles.avatar , {...styles.avatar, backgroundColor: bgAvatar}}>
+              <Text style={styles.class}>{classNumber}</Text>
             </View>
           </View>
           <View style={styles.right}>
-            <Text style={styles.nameAdmin}>Muhammad Anas</Text>
+            <Text style={styles.nameAdmin}>{name}</Text>
             <View style={styles.rightChild}>
-            <Text style={styles.notifDetails}>Added a new quiz in <Text style={styles.topicNotif}>Semi-Conductors</Text></Text>
+            <Text style={styles.notifDetails}>{description}</Text>
             </View>
           </View>
         </View>

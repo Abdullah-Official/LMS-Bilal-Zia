@@ -42,6 +42,7 @@ import {Provider, useSelector} from 'react-redux'
 import { store } from "./app/store";
 import { logout, userInfo, userToken } from "./reducers/userReducer";
 import { useDispatch } from "react-redux";
+import localStorage from 'react-native-sync-localstorage'
 
 function App({navigation}) {
   const AuthStack = createStackNavigator();
@@ -53,23 +54,22 @@ function App({navigation}) {
   // const navigation = useNavigation()
   const state = useSelector(state => state.user)
   console.log("user data ", state)
-  const [token, setToken] = useState('')
+  // const [token, setToken] = useState('')
+  
   const dispatch = useDispatch()
-  // console.log("main token ", token)
   useEffect(() => {
     dispatch(userInfo())
     dispatch(userToken())
-    getToken()
   }, [])
 
-   const getToken = async () => {
-     try {
-      const token = await AsyncStorage.getItem('token')
-      setToken(token)
-     } catch (error) {
-       alert(error)
-     }
-   }
+  //  const getToken = async () => {
+  //    try {
+  //     const token = await AsyncStorage.getItem('token')
+  //     setToken(token)
+  //    } catch (error) {
+  //      alert(error)
+  //    }
+  //  }
    
  
   const HomeStackScreens = () => (
@@ -296,7 +296,7 @@ function App({navigation}) {
               marginLeft: 10,
             }}
           >
-            <DrawerItem
+            {/* <DrawerItem
               label="Purchases"
               onPress={() => props.navigation.navigate("Purchases")}
               labelStyle={styles.drawerLabel}
@@ -304,7 +304,7 @@ function App({navigation}) {
               icon={() => (
                 <AntDesign name="shoppingcart" size={24} color="white" />
               )}
-            />
+            /> */}
             <DrawerItem
               label="Connect"
               onPress={() => props.navigation.navigate("InstrutorScreen")}

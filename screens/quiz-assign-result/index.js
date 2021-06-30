@@ -6,9 +6,10 @@ import ProgressCircle from "react-native-progress-circle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 
-const QuizAssignmentResult = (props) => {
+const QuizAssignmentResult = ({route}) => {
+  console.log(route.params.score, " RESULT")
   const navigation = useNavigation();
-  // const title = props.route.params.props.route.params.topicActivities.topicName;
+  // const title = route.params.props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <View
@@ -21,7 +22,7 @@ const QuizAssignmentResult = (props) => {
         }}
       >
         <HeaderApp
-          // title={`${title.slice(0, 13)} ..`}
+          title={`${route.params.props.route.params.topicName.slice(0, 13)} `}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -34,14 +35,14 @@ const QuizAssignmentResult = (props) => {
         >
           <View style={{ alignItems: "center" }}>
             <ProgressCircle
-              // percent={props.route.params.score}
+              percent={route.params.score}
               radius={65}
               borderWidth={12}
               color="#FFA24B"
               shadowColor="#ccc"
               bgColor="#fff"
             >
-              {/* <Text style={{ fontSize: 25 }}>{props.route.params.score}</Text> */}
+              <Text style={{ fontSize: 25, color:"#000" }}>{route.params.score  ? route.params.score : "00"}</Text>
               <Text
                 style={{
                   fontFamily: "PoppinsMedium",
@@ -77,17 +78,17 @@ const QuizAssignmentResult = (props) => {
             <View style={{ width: "50%" }}>
               <Text style={styles.lightTxt}>Points Obatined</Text>
               <Text style={styles.boldTxt}>
-                {props.route.params.score} points
+                {route.params.score} points
               </Text>
             </View>
-            <View style={{ width: "50%", marginTop: 30 }}>
+            {/* <View style={{ width: "50%", marginTop: 30 }}>
               <Text style={styles.lightTxt}>Total time</Text>
               <Text style={styles.boldTxt}>100 sec</Text>
             </View>
             <View style={{ width: "50%", marginTop: 30 }}>
               <Text style={styles.lightTxt}>Time Taken</Text>
               <Text style={styles.boldTxt}>40 sec</Text>
-            </View>
+            </View> */}
           </View>
           <View
             style={{

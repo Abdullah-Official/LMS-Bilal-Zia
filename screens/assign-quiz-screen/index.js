@@ -25,7 +25,7 @@ const QuizAssignmentScreen = (props) => {
   const [solution, setSolution] = useState(false);
   const navigation = useNavigation();
   const quizData = props.route.params.quizData
-  // alert(quizData.length)
+  // console.log(score)
   
   useEffect(() => {
     setOptions(
@@ -35,9 +35,9 @@ const QuizAssignmentScreen = (props) => {
       ])
     );
   }, [currentIndex]);
-
+  // console.log(quizData.length)
   const handleNext = () => {
-    if (currentIndex >= quizData.length) {
+    if (currentIndex >= quizData.length - 1 ) {
       navigation.navigate("QuizAssignmentResult", {props,score})
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
@@ -71,7 +71,7 @@ const QuizAssignmentScreen = (props) => {
     }
   };
 
-  console.log(progress);
+  // console.log(progress);
   // const title = props.route.params.topicActivities.topicName;
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
@@ -84,7 +84,7 @@ const QuizAssignmentScreen = (props) => {
         }}
       >
         <HeaderApp
-          title={`Topic Name`}
+          title={props.route.params.topicName}
           iconLeft={require("../../assets/back-arrow-white.png")}
           nav="back"
         />
@@ -131,7 +131,7 @@ const QuizAssignmentScreen = (props) => {
                   bgColor="#fff"
                   height={20}
                   textStyle={{ fontSize: 20 }}
-                  onTimeElapsed={() => [alert("Quiz time over .."), navigation.navigate("QuizAssignmentResult")]}
+                  onTimeElapsed={() => [alert("Quiz time over, but you can continue ..")]}
                 />
               </View>
             </View>

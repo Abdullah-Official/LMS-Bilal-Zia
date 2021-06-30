@@ -32,6 +32,7 @@ const CourseDetails = (props) => {
   const EnrollFunc = () => {
     mutation.mutate();
     setTimeout(() => {
+      alert(`Your request has been submitted \n Your account will be approved after payment`)
       navigation.goBack();
     }, 1000);
   };

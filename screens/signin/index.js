@@ -8,7 +8,6 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler'
 import styles from './styles';
 import axios from 'axios';
 import { useMutation } from 'react-query'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from 'react-redux'
 import { userInfo, userToken } from '../../reducers/userReducer'
 import { Spinner } from 'native-base'
@@ -24,8 +23,8 @@ const Signin = ({navigation}) => {
         dispatch(userInfo(data.data.message))
         dispatch(userToken( data.data.token))
       },
-      onError: res => {
-        alert(res.data.message)
+      onError: e => {
+        console.log(e)
       }
     })
 

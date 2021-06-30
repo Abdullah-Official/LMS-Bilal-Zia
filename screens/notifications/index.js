@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import styles from "./styles";
 import HeaderApp from "../../components/Header";
 import { Image, Button } from "react-native";
 import NotificationBox from "../../components/Notification";
 import { ScrollView } from "react-native-gesture-handler";
+import axios from "axios";
 
 const Notifications = () => {
-  const [isNotif, setIsNotif] = useState(false);
+  const [isNotif, setIsNotif] = useState([]);
+
+  useEffect(() => {
+    FetchNotifications()
+  },[])
+
+  const FetchNotifications = () => {
+    axios.get(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getnotifications`)
+    .then(response => setIsNotif(response.data.message))
+    .catch(e => console.log("error ", e))
+  }
+  console.log(isNotif)
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={{ flex: 0 }}>
@@ -16,17 +29,13 @@ const Notifications = () => {
             iconLeft={require("../../assets/nav-icon-dark.png")}
             nav="drawer"
           />
-          <Button
-            title="Click to show notifications"
-            onPress={() => setIsNotif(isNotif === true ? false : true)}
-          />
         </View>
         <View style={{ marginTop: 30, alignItems: "center" }}>
           <Text style={styles.notificationTxt}>Notifications</Text>
         </View>
       </View>
 
-      {isNotif === false ? (
+      {!isNotif.length ? (
         <View
           style={{
             flex: 2,
@@ -52,11 +61,19 @@ const Notifications = () => {
       ) : (
         <ScrollView>
           <View style={{ flex: 1, marginTop: 30, marginHorizontal: 25 }}>
-            <NotificationBox bgAvatar="#04597D" />
-            <NotificationBox bgAvatar="#234F8F" />
-            <NotificationBox bgAvatar="#04597D" />
-            <NotificationBox bgAvatar="#234F8F" />
-            <NotificationBox bgAvatar="#04597D" />
+           {
+             isNotif.map((v,i) => {
+              return (
+                <NotificationBox 
+              bgAvatar={i%2 == 0 ? ("#04597D") : ("#234F8F")} 
+              key={i}
+              name={v.name}
+              classNumber={v.class}
+              description={v.description}
+              />
+              )
+             })
+           }
           </View>
         </ScrollView>
       )}

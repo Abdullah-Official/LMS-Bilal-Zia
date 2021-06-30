@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createSlice } from "@reduxjs/toolkit";
+import localStorage from 'react-native-sync-localstorage'
 
 const initialState = {
   user: {},
@@ -10,9 +11,8 @@ const userReducer = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logout: (state, action) => {
+    logout:  (state, action) => {
       state.token = null;
-      AsyncStorage.removeItem("token");
     },
     userInfo: (state, action) => {
     //   state.token = action.payload.token;
@@ -21,7 +21,7 @@ const userReducer = createSlice({
     state.user = action.payload
     },
     userToken: (state,action) => {
-      AsyncStorage.setItem('token', action.payload)
+      // AsyncStorage.setItem('token', action.payload)
         state.token = action.payload
     }
   },
