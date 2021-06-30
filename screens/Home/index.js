@@ -12,25 +12,39 @@ import { useNavigation } from "@react-navigation/core";
 import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses } from "../../reducers/classReducer";
+import axios from "axios";
+// import { fetchEnrollClasses } from "../../reducers/enrollclassesReducer";
 
 const Home = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const state = useSelector(state => state.user)
-  const { isLoading, error, data } = useQuery('repoData', () =>
-  fetch(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`).then(res =>
-    res.json()
-  )
-)
+  const [data, setData] = useState([])
+  console.log(state)
+//   const { isLoading, error, data } = useQuery('enrollclasses', () =>
+//   fetch(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`).then(res =>
+//     res.json()
+//   )
+// )
 const classes = useSelector(state => state.classes)
+// const enrolledClasses = useSelector(state => state.enrolledClasses)
+// console.log(enrolledClasses, " sasasafaf")
 
 useEffect(() => {
   dispatch(fetchClasses())
+  // dispatch(fetchEnrollClasses({id: state.user._id}))
+ fetchEnrolled()
+
 }, [])
 
+  const fetchEnrolled = () => {
+    axios.get(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`)
+    .then(response => setData(response.data.message))
+    .catch(e => console.log("error ", e))
+  }
 
-// console.log(data, "QUERY")
-// if (isLoading) return 'Loading...'
+console.log(data, " Enrolled")
+
 
   return (
     <>
@@ -75,11 +89,11 @@ useEffect(() => {
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-              {!isLoading ? (
+            {data  ? (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  data={data.message}
+                  data={data}
                   renderItem={({ item }) => (
                     <CoursesBox
                       id={item._id}
@@ -108,7 +122,7 @@ useEffect(() => {
                   data={classes}
                   renderItem={({ item }) => (
                     <CoursesBox
-                      id={item.id}
+                      id={item._id}
                       grade={item.grade}
                       about={item.about}
                       navigation={"CourseDetails"}

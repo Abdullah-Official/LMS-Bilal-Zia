@@ -7,6 +7,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import styles from '../signin/styles'
 import { useMutation } from 'react-query'
 import axios from 'axios';
+import { Spinner } from 'native-base'
 
 
 const SignUp = ({navigation}) => {
@@ -15,10 +16,22 @@ const SignUp = ({navigation}) => {
     const [phone, setPhone] = useState()
     const [password, setPassword] = useState()
     const [cpassword, setCPassword] = useState()
-    const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signup', post))
+    const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signup', post),{
+      onSuccess: data => {
+        alert(data.data.message)
+      },
+      onError: data => {
+        alert(data.data.message)
+      }
+    })
 
     const authenticate = () => {
           mutation.mutate({name,email,phone,password,cpassword})
+          setName('');
+          setEmail('');
+          setPhone('');
+          setPassword('');
+          setCPassword('');
   }
 
 
@@ -44,7 +57,11 @@ const SignUp = ({navigation}) => {
                  <View style={{ flex: 1, marginHorizontal: 20 }}>
                  <View style={{ paddingTop: 110 }}>
                   <Text style={styles.login_heading}>Sign Up</Text>
-                  <Text>{mutation.isSuccess ? ("Signed up") : ("not sign up")}</Text>
+                  <View style={{justifyContent:'center', alignItems:'center'}}>
+                    {mutation.isLoading ? (
+                      <Spinner  color='green' />
+                    ): null}
+                  </View>
                 </View>
                 {/* <Text>{error}</Text> */}
                 <View style={{marginHorizontal:20, marginTop:20}}>
@@ -97,7 +114,7 @@ const SignUp = ({navigation}) => {
                  </View>
                 </View>
                 <View style={{marginVertical:15,}}>
-                    <TouchableOpacity onPress={authenticate} disabled={password !== cpassword ? true : false}  activeOpacity={0.7} style={styles.btn_container}>
+                    <TouchableOpacity onPress={authenticate} disabled={password !== cpassword || password === '' ? true : false}  activeOpacity={0.7} style={styles.btn_container}>
                         <Text style={styles.btn_txt}>Sign up</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("SignIn")} style={styles.account_container}>

@@ -59,7 +59,18 @@ function App({navigation}) {
   useEffect(() => {
     dispatch(userInfo())
     dispatch(userToken())
+    getToken()
   }, [])
+
+   const getToken = async () => {
+     try {
+      const token = await AsyncStorage.getItem('token')
+      setToken(token)
+     } catch (error) {
+       alert(error)
+     }
+   }
+   
  
   const HomeStackScreens = () => (
     <HomeStack.Navigator

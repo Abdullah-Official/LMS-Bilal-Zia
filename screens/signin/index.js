@@ -11,6 +11,7 @@ import { useMutation } from 'react-query'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch } from 'react-redux'
 import { userInfo, userToken } from '../../reducers/userReducer'
+import { Spinner } from 'native-base'
 
 const Signin = ({navigation}) => {
   const dispatch = useDispatch()
@@ -20,15 +21,19 @@ const Signin = ({navigation}) => {
     const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signin', post), {
       onSuccess: data =>{
         console.log(data.data.message)
-        AsyncStorage.setItem('token', data.data.token)
         dispatch(userInfo(data.data.message))
         dispatch(userToken( data.data.token))
+      },
+      onError: res => {
+        alert(res.data.message)
       }
     })
 
     const authenticate = () => {
       // dispatch(signinUser({email,password}))
       mutation.mutate({ email, password })
+      setEmail('');
+      setPassword('');
 }
 
    
@@ -59,7 +64,11 @@ const Signin = ({navigation}) => {
                 </View>
                 <View style={{ paddingTop: 40 }}>
                   <Text style={styles.login_heading}>Login</Text>
-                  <Text>{mutation.isSuccess ? ("Logged inn") : ("not logged inn")}</Text>
+                  <View style={{justifyContent:'center', alignItems:'center'}}>
+                    {mutation.isLoading ? (
+                      <Spinner  color='green' />
+                    ): null}
+                  </View>
                 </View>
                 {/* <Text style={{textAlign:'center', color:"red", fontWeight:'bold'}}>{name}</Text> */}
                 <View style={{marginHorizontal:20, marginTop:20}}>
