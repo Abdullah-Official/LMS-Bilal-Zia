@@ -20,8 +20,8 @@ const userReducer = createSlice({
     //   state.userId = action.payload._id;
     state.user = action.payload
     },
-    userToken: (state,action) => {
-      // AsyncStorage.setItem('token', action.payload)
+    userToken:  (state,action) => {
+    //  await AsyncStorage.setItem('token', action.payload)
         state.token = action.payload
     }
   },

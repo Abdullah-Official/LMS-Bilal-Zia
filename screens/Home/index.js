@@ -13,6 +13,7 @@ import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses } from "../../reducers/classReducer";
 import axios from "axios";
+import { BASE_URL } from "../../app/api";
 // import { fetchEnrollClasses } from "../../reducers/enrollclassesReducer";
 
 const Home = () => {
@@ -27,18 +28,19 @@ const Home = () => {
 //   )
 // )
 const classes = useSelector(state => state.classes)
-// const enrolledClasses = useSelector(state => state.enrolledClasses)
-// console.log(enrolledClasses, " sasasafaf")
+const enrolledClasses = useSelector(state => state.enrolledClasses)
+console.log(enrolledClasses, " sasasafaf")
+
+
 
 useEffect(() => {
   dispatch(fetchClasses())
-  // dispatch(fetchEnrollClasses({id: state.user._id}))
  fetchEnrolled()
 
 }, [])
 
   const fetchEnrolled = () => {
-    axios.get(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`)
+    axios.get(`${BASE_URL}/getenrollclasses/${state.user._id}`)
     .then(response => setData(response.data.message))
     .catch(e => console.log("error ", e))
   }

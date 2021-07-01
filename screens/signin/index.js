@@ -11,14 +11,16 @@ import { useMutation } from 'react-query'
 import { useDispatch } from 'react-redux'
 import { userInfo, userToken } from '../../reducers/userReducer'
 import { Spinner } from 'native-base'
+import { BASE_URL } from '../../app/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Signin = ({navigation}) => {
   const dispatch = useDispatch()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
-    const mutation = useMutation(post => axios.post('https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/signin', post), {
-      onSuccess: data =>{
+    const mutation = useMutation(post => axios.post(`${BASE_URL}/signin`, post), {
+      onSuccess:  data =>{
         console.log(data.data.message)
         dispatch(userInfo(data.data.message))
         dispatch(userToken( data.data.token))

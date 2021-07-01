@@ -11,22 +11,47 @@ import {
 } from "react-native-gesture-handler";
 import HeaderApp from "../../components/Header";
 import styles from "../Profile/styles";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { BASE_URL } from "../../app/api";
+import { Spinner } from "native-base";
 
-const ProfileEdit = () => {
-  const [cPassword, setCPassword] = useState();
-  const [newPassword, setNewPassword] = useState();
-  const [cnPassword, setCnPassword] = useState();
+const ProfileEdit = ({navigation}) => {
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const state = useSelector((state) => state.user);
+
+  const mutation = useMutation(post => axios.put(`${BASE_URL}/updateuser/${state.user._id}`, post), {
+    onSuccess: data =>{
+      alert("Updated Successfully, Please login again to see changes.")
+    },
+    onError: e => {
+      console.log(e)
+    }
+  })
+
+  const updateUser = () => {
+    mutation.mutate({name,email,phone})
+    setEmail('');
+    setName('');
+    setPhone('');
+    setTimeout(() => {
+      navigation.goBack()
+    },3000)
+  }
 
   return (
     <>
       <ScrollView
-        style={{ flex: 1, backgroundColor: "#fff", width:'100%' }}
+        style={{ flex: 1, backgroundColor: "#fff", width: "100%" }}
         keyboardShouldPersistTaps={"handled"}
         bounces={false}
         scrollEnabled={true}
       >
         <KeyboardAvoidingView
-          style={{flex:1, backgroundColor: "#fff" }}
+          style={{ flex: 1, backgroundColor: "#fff" }}
           enabled
           keyboardVerticalOffset={-500}
           behavior="padding"
@@ -57,19 +82,75 @@ const ProfileEdit = () => {
                     paddingBottom: 20,
                   }}
                 >
-                  <Image
+                  {/* <Image
                     source={require("../../assets/profile-pic.png")}
                     style={styles.profileImg}
-                  />
+                  /> */}
+                  <View
+                    style={{
+                      backgroundColor: "#234F8F",
+                      width: 80,
+                      height: 80,
+                      padding: 6,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: 100,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 24,
+                        fontWeight: "bold",
+                        textTransform: "uppercase",
+                        color: "#fff",
+                      }}
+                    >
+                      {state.user.name.slice(0, 2)}
+                    </Text>
+                  </View>
                 </View>
               </ImageBackground>
             </View>
-            <View style={{ marginTop: 30, marginHorizontal: 25, backgroundColor:'#fff' }}>
+            <View style={{justifyContent:'center', alignItems:'center'}}>
+                    {mutation.isLoading ? (
+                      <Spinner  color='green' />
+                    ): null}
+                  </View>
+            <View
+              style={{
+                marginTop: 30,
+                marginHorizontal: 25,
+                backgroundColor: "#fff",
+              }}
+            >
               <View style={{ marginBottom: 20 }}>
                 <Text style={styles.textDark}>Name</Text>
-                <TextInput style={styles.input} value={"Marry Jane"} />
+                <TextInput
+                  placeholder="Edit Your Name"
+                  style={styles.input}
+                  value={name}
+                  onChangeText={(e) => setName(e)}
+                />
               </View>
-              <View style={{ marginBottom: 20, backgroundColor:'#fff' }}>
+              <View style={{ marginBottom: 20 }}>
+                <Text style={styles.textDark}>Email</Text>
+                <TextInput
+                  placeholder="Edit Your Email"
+                  style={styles.input}
+                  value={email}
+                  onChangeText={(e) => setEmail(e)}
+                />
+              </View>
+              <View style={{ marginBottom: 20 }}>
+                <Text style={styles.textDark}>Phone</Text>
+                <TextInput
+                  placeholder="Edit Your Phone"
+                  style={styles.input}
+                  value={phone}
+                  onChangeText={(e) => setPhone(e)}
+                />
+              </View>
+              {/* <View style={{ marginBottom: 20, backgroundColor:'#fff' }}>
                 <Text style={styles.textDark}>Password</Text>
                 <TextInput
                   style={styles.input}
@@ -92,9 +173,15 @@ const ProfileEdit = () => {
                   secureTextEntry={true}
                   placeholder="Confirm new password"
                 />
-              </View>
-              <View style={{ marginVertical: 10, alignItems: "center", backgroundColor:'#fff' }}>
-                <TouchableOpacity style={styles.btnBuy} activeOpacity={0.6}>
+              </View> */}
+              <View
+                style={{
+                  marginVertical: 10,
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                }}
+              >
+                <TouchableOpacity onPress={updateUser}  style={styles.btnBuy} activeOpacity={0.6}>
                   <Text style={styles.buyTxt}>SAVE</Text>
                 </TouchableOpacity>
               </View>

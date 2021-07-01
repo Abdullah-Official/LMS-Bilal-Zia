@@ -65,20 +65,28 @@ const TopicDetails = (props) => {
               video={props.route.params.video}
               topicDescription={props.route.params.topicDescription}
             />
-            <IndTopicCard
+            {
+              props.route.params.quiz.length > 0 ? (
+                <IndTopicCard
               content="Quiz"
               image={require("../../assets/online-quiz.png")}
               topicName={props.route.params.topicName}
               quizData={props.route.params.quiz}
               navigation="QuizAssignmentScreen"
             />
-            <IndTopicCard
+              ): null
+            }
+           {
+             props.route.params.assignment.length > 0 ? (
+              <IndTopicCard
               content="Assignment"
               image={require("../../assets/assignment.png")}
               topicName={props.route.params.topicName}
               quizData={props.route.params.assignment}
               navigation="QuizAssignmentScreen"
             />
+             ) : null
+           }
           </View>
         </ScrollView>
       </View>

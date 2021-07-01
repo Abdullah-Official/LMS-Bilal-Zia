@@ -6,8 +6,8 @@ import ProgressCircle from "react-native-progress-circle";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 
-const QuizAssignmentResult = ({route}) => {
-  console.log(route.params.score, " RESULT")
+const QuizAssignmentResult = ({ route }) => {
+  // console.log(route.params.score, " RESULT");
   const navigation = useNavigation();
   // const title = route.params.props.route.params.topicActivities.topicName;
   return (
@@ -42,7 +42,9 @@ const QuizAssignmentResult = ({route}) => {
               shadowColor="#ccc"
               bgColor="#fff"
             >
-              <Text style={{ fontSize: 25, color:"#000" }}>{route.params.score  ? route.params.score : "00"}</Text>
+              <Text style={{ fontSize: 25, color: "#000" }}>
+                {route.params.score ? route.params.score : "00"}
+              </Text>
               <Text
                 style={{
                   fontFamily: "PoppinsMedium",
@@ -77,9 +79,7 @@ const QuizAssignmentResult = ({route}) => {
             </View>
             <View style={{ width: "50%" }}>
               <Text style={styles.lightTxt}>Points Obatined</Text>
-              <Text style={styles.boldTxt}>
-                {route.params.score} points
-              </Text>
+              <Text style={styles.boldTxt}>{route.params.score} points</Text>
             </View>
             {/* <View style={{ width: "50%", marginTop: 30 }}>
               <Text style={styles.lightTxt}>Total time</Text>

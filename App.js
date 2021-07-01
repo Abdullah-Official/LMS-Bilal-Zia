@@ -40,9 +40,10 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Provider, useSelector} from 'react-redux'
 import { store } from "./app/store";
-import { logout, userInfo, userToken } from "./reducers/userReducer";
+import { logout, userInfo } from "./reducers/userReducer";
 import { useDispatch } from "react-redux";
 import localStorage from 'react-native-sync-localstorage'
+import { getAsyncStorageValues } from "./app/asyncstorage-values";
 
 function App({navigation}) {
   const AuthStack = createStackNavigator();
@@ -54,13 +55,14 @@ function App({navigation}) {
   // const navigation = useNavigation()
   const state = useSelector(state => state.user)
   console.log("user data ", state)
-  // const [token, setToken] = useState('')
-  
+  // const [userToken, setUserToken] = useState(" ")
+
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(userInfo())
-    dispatch(userToken())
+    // dispatch(userToken())
   }, [])
+
 
   //  const getToken = async () => {
   //    try {
@@ -70,6 +72,8 @@ function App({navigation}) {
   //      alert(error)
   //    }
   //  }
+
+ 
    
  
   const HomeStackScreens = () => (
@@ -268,6 +272,10 @@ function App({navigation}) {
   function CustomDrawerContent(props) {
     // const navigation = useNavigation()
     const dispatch = useDispatch()
+    async function removeItemValue() {
+    await AsyncStorage.clear()
+    setUserToken('')
+  }
     return (
       <>
       
@@ -340,7 +348,7 @@ function App({navigation}) {
     return (
         <> 
         {
-          state.token  ?
+          state.token ?
           (
             <NavigationContainer>
             <ImageBackground

@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { BASE_URL } from "../app/api";
 import { fetch3, fetch2 } from "../app/helpers/fetch";
 
 const initialState = [];
 
 export const fetchClasses = createAsyncThunk("fetchclasses", async () => {
-  const result = await fetch3(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getclasses`, "get");
+  const result = await fetch3(`${BASE_URL}/getclasses`, "get");
   return result;
 });
 

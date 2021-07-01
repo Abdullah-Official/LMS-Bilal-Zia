@@ -6,7 +6,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 
 const ChaptersBox = (props) => {
-  console.log("START ", props, " PRAAAPS")
+  // console.log("START ", props, " PRAAAPS")
   const navigation = useNavigation()
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Topics", props)} style={styles.chapters_container} activeOpacity={0.7}>

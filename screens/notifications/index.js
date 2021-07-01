@@ -6,6 +6,7 @@ import { Image, Button } from "react-native";
 import NotificationBox from "../../components/Notification";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
+import { BASE_URL } from "../../app/api";
 
 const Notifications = () => {
   const [isNotif, setIsNotif] = useState([]);
@@ -15,11 +16,11 @@ const Notifications = () => {
   },[])
 
   const FetchNotifications = () => {
-    axios.get(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getnotifications`)
+    axios.get(`${BASE_URL}/getnotifications`)
     .then(response => setIsNotif(response.data.message))
     .catch(e => console.log("error ", e))
   }
-  console.log(isNotif)
+  // console.log(isNotif)
 
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>

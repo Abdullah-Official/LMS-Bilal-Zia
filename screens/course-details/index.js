@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../../app/api";
 
 const CourseDetails = (props) => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ const CourseDetails = (props) => {
   const mutation = useMutation(
     (post) =>
       axios.post(
-        `https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/postenrollment/${state.user._id}/${props.route.params.id}`,
+        `${BASE_URL}/postenrollment/${state.user._id}/${props.route.params.id}`,
         post
       ),
     {
@@ -32,7 +33,7 @@ const CourseDetails = (props) => {
   const EnrollFunc = () => {
     mutation.mutate();
     setTimeout(() => {
-      alert(`Your request has been submitted \n Your account will be approved after payment`)
+      alert(`Your request has been submitted \nYou can access this class after payment.`)
       navigation.goBack();
     }, 1000);
   };
@@ -40,7 +41,7 @@ const CourseDetails = (props) => {
   const enrolled = state.user.coursesEnrolled.find(
     (v) => v == props.route.params.id
   );
-  console.log(enrolled);
+  // console.log(enrolled);
 
   return (
     <ScrollView style={{ backgroundColor: "#2F5060" }}>

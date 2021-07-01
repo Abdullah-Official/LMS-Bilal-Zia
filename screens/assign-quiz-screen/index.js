@@ -12,7 +12,7 @@ import { Content, Card, CardItem, Body } from "native-base";
 // import {quizData} from '../../Data/quiz'
 
 const QuizAssignmentScreen = (props) => {
-  console.log(props)
+  console.log(props);
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
   }, []);
@@ -23,10 +23,11 @@ const QuizAssignmentScreen = (props) => {
   const [score, setScore] = useState(0);
   const [progress, setProgress] = useState(0);
   const [solution, setSolution] = useState(false);
+  const [timeOver, setTimeOver] = useState("");
   const navigation = useNavigation();
-  const quizData = props.route.params.quizData
+  const quizData = props.route.params.quizData;
   // console.log(score)
-  
+
   useEffect(() => {
     setOptions(
       handleShuffle([
@@ -37,8 +38,8 @@ const QuizAssignmentScreen = (props) => {
   }, [currentIndex]);
   // console.log(quizData.length)
   const handleNext = () => {
-    if (currentIndex >= quizData.length - 1 ) {
-      navigation.navigate("QuizAssignmentResult", {props,score})
+    if (currentIndex >= quizData.length - 1) {
+      navigation.navigate("QuizAssignmentResult", { props, score });
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
       setSelected();
@@ -47,12 +48,16 @@ const QuizAssignmentScreen = (props) => {
   };
 
   const handleCheck = (v) => {
-    setSelected(v);
+    if(!selected){
+      setSelected(v);
     if (v === quizData[currentIndex]?.correct_answer) {
       setScore(score + 10);
       setProgress(progress + 0.1);
     }
     setSolution(true);
+    }else{
+      alert("You can check only one")
+    }
   };
 
   const handleShuffle = (optionss) => {
@@ -97,6 +102,17 @@ const QuizAssignmentScreen = (props) => {
             progress={progress}
             width={200}
           />
+          <Text
+            style={{
+              color: "red",
+              fontSize: 12,
+              textAlign: "center",
+              marginHorizontal: 20,
+              paddingTop:12
+            }}
+          >
+            {timeOver}
+          </Text>
         </View>
       </View>
 
@@ -131,11 +147,16 @@ const QuizAssignmentScreen = (props) => {
                   bgColor="#fff"
                   height={20}
                   textStyle={{ fontSize: 20 }}
-                  onTimeElapsed={() => [alert("Quiz time over, but you can continue ..")]}
+                  onTimeElapsed={() => [
+                    setTimeOver(
+                      "Your Quiz time is over, but you can continue."
+                    ),
+                  ]}
                 />
               </View>
             </View>
           </View>
+
           <View style={styles.quiz_container}>
             <View style={styles.quiz_main}>
               <Text style={styles.questionTxt}>
@@ -197,9 +218,7 @@ const QuizAssignmentScreen = (props) => {
                   </CardItem>
                   <CardItem bordered>
                     <Body>
-                      <Text>
-                      {quizData[currentIndex].solution}
-                      </Text>
+                      <Text>{quizData[currentIndex].solution}</Text>
                     </Body>
                   </CardItem>
                 </Card>
