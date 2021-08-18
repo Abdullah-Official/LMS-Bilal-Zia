@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ImageBackground } from "react-native";
 import { StatusBar } from "react-native";
 import { Image } from "react-native";
@@ -8,9 +8,24 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
   const state = useSelector((state) => state.user);
+  const [user, setUser] = useState({})
+  // console.log("user from profile  " ,user )
+  async function getUser() {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      setUser(data)
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  useEffect(() => {
+    getUser()
+  },[])
   return (
     <>
       <ScrollView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -62,7 +77,7 @@ const Profile = ({ navigation }) => {
                       color:"#fff"
                     }}
                   >
-                    {state.user.name.slice(0, 2)}
+                    {state.user.name && state.user.name.slice(0, 2)}
                   </Text>
                 </View>
               </View>
@@ -71,15 +86,15 @@ const Profile = ({ navigation }) => {
           <View style={{ marginTop: 40, marginHorizontal: 25 }}>
             <View style={styles.details_container}>
               <Text style={styles.textDark}>Name</Text>
-              <Text style={styles.textLight}>{state.user.name}</Text>
+              <Text style={styles.textLight}>{state.user.name && state.user.name}</Text>
             </View>
             <View style={styles.details_container}>
               <Text style={styles.textDark}>Email</Text>
-              <Text style={styles.textLight}> {state.user.email}</Text>
+              <Text style={styles.textLight}>{state.user.email && state.user.email}</Text>
             </View>
             <View style={styles.details_container}>
               <Text style={styles.textDark}>Phone</Text>
-              <Text style={styles.textLight}>{state.user.phone}</Text>
+              <Text style={styles.textLight}>{state.user.phone && state.user.phone}</Text>
             </View>
           </View>
         </View>

@@ -9,7 +9,7 @@ import styles from './styles';
 import axios from 'axios';
 import { useMutation } from 'react-query'
 import { useDispatch } from 'react-redux'
-import { userInfo, userToken } from '../../reducers/userReducer'
+import { addToken, userInfo, userToken } from '../../reducers/userReducer'
 import { Spinner } from 'native-base'
 import { BASE_URL } from '../../app/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -20,10 +20,11 @@ const Signin = ({navigation}) => {
     const [password, setPassword] = useState()
 
     const mutation = useMutation(post => axios.post(`${BASE_URL}/signin`, post), {
-      onSuccess:  data =>{
-        console.log(data.data.message)
-        dispatch(userInfo(data.data.message))
-        dispatch(userToken( data.data.token))
+      onSuccess:   data =>{
+        // console.log(data.data.message)
+       dispatch(userInfo(data.data.message))
+      dispatch(addToken(data.data.token))
+        //   alert("Success login")
       },
       onError: e => {
         console.log(e)
@@ -35,6 +36,7 @@ const Signin = ({navigation}) => {
       mutation.mutate({ email, password })
       setEmail('');
       setPassword('');
+     
 }
 
    

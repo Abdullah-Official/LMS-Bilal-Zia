@@ -20,13 +20,13 @@ const userReducer = createSlice({
     //   state.userId = action.payload._id;
     state.user = action.payload
     },
-    userToken:  (state,action) => {
+    addToken:  (state,action) => {
     //  await AsyncStorage.setItem('token', action.payload)
         state.token = action.payload
     }
   },
 });
 
-export const { userInfo, logout, userToken } = userReducer.actions;
+export const { userInfo, logout, addToken } = userReducer.actions;
 
 export default userReducer.reducer;

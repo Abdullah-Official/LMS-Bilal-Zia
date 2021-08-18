@@ -16,7 +16,7 @@ import Profile from "./screens/Profile";
 import { Text, View } from "react-native";
 import { AuthContext } from "./context";
 import Animated, { color } from "react-native-reanimated";
-import { StyleSheet } from "react-native";
+import { StyleSheet,  } from "react-native";
 import { ImageBackground } from "react-native";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -39,13 +39,19 @@ import QuizAssignmentResult from "./screens/quiz-assign-result";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Provider, useSelector} from 'react-redux'
-import { store } from "./app/store";
-import { logout, userInfo } from "./reducers/userReducer";
+// import {  store } from "./app/store";
+import { addToken, logout, userInfo } from "./reducers/userReducer";
 import { useDispatch } from "react-redux";
 import localStorage from 'react-native-sync-localstorage'
 import { getAsyncStorageValues } from "./app/asyncstorage-values";
+import Subjects from "./screens/subjects";
+
+import {store} from './app/store'
+
+
 
 function App({navigation}) {
+
   const AuthStack = createStackNavigator();
   const Tabs = createBottomTabNavigator();
   const HomeStack = createStackNavigator();
@@ -53,15 +59,20 @@ function App({navigation}) {
   const ProfileStack = createStackNavigator();
   const Stack = createStackNavigator();
   // const navigation = useNavigation()
-  const state = useSelector(state => state.user)
-  console.log("user data ", state)
-  // const [userToken, setUserToken] = useState(" ")
-
+  
+  // console.log("user data ", state)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(userInfo())
-    // dispatch(userToken())
-  }, [])
+  
+  // useEffect(() => {
+  //   dispatch(userInfo())
+   
+  // }, [])
+  const state = useSelector(state => state.user)
+  console.log(state.token , " userReducer" )
+// console.log(state.token, " redux token")
+  // const TOKEN = dispatch(addToken())
+  // console.log(TOKEN, " apna token")
+ 
 
 
   //  const getToken = async () => {
@@ -69,7 +80,7 @@ function App({navigation}) {
   //     const token = await AsyncStorage.getItem('token')
   //     setToken(token)
   //    } catch (error) {
-  //      alert(error)
+  //      alert(error
   //    }
   //  }
 
@@ -255,6 +266,7 @@ function App({navigation}) {
           <Stack.Screen name="InstrutorScreen" component={InstructorScreen} />
           <Stack.Screen name="Purchases" component={Purchases} />
           <Stack.Screen name="ProfileEdit" component={ProfileEdit} />
+          <Stack.Screen name="Subjects" component={Subjects} />
           <Stack.Screen
             name="QuizAssignmentScreen"
             component={QuizAssignmentScreen}
@@ -263,19 +275,18 @@ function App({navigation}) {
             name="QuizAssignmentResult"
             component={QuizAssignmentResult}
           />
-          <Stack.Screen name="SignIn" component={SignIn} />
+          {/* {userToken ? (<Stack.Screen name="SignIn" component={SignIn} />) : null} */}
         </Stack.Navigator>
       </Animated.View>
     );
   };
 
   function CustomDrawerContent(props) {
-    // const navigation = useNavigation()
-    const dispatch = useDispatch()
-    async function removeItemValue() {
-    await AsyncStorage.clear()
-    setUserToken('')
-  }
+    const LogOut = async () => {
+      
+      dispatch(logout())
+
+    }
     return (
       <>
       
@@ -324,7 +335,7 @@ function App({navigation}) {
             />
             <DrawerItem
               label="Log Out"
-              onPress={() => dispatch(logout())}
+              onPress={LogOut}
               labelStyle={styles.drawerLabel}
               style={styles.drawerItem}
               icon={() => <Feather name="log-out" size={24} color="white" />}
@@ -348,7 +359,7 @@ function App({navigation}) {
     return (
         <> 
         {
-          state.token ?
+         state.token && state.token  ?
           (
             <NavigationContainer>
             <ImageBackground
@@ -449,10 +460,13 @@ const styles = StyleSheet.create({
 
 export default  () => {
   const queryClient = new QueryClient()
+  
   return (
     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-    <App />
+      {/* <PersistGate persistor={persistedStore} loading={null} > */}
+      <App />
+      {/* </PersistGate> */}
     </Provider>
   </QueryClientProvider>
   )

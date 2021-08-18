@@ -75,7 +75,7 @@ const QuizAssignmentResult = ({ route }) => {
           <View style={{ flexWrap: "wrap", flexDirection: "row" }}>
             <View style={{ width: "50%" }}>
               <Text style={styles.lightTxt}>Total Points</Text>
-              <Text style={styles.boldTxt}>100 points</Text>
+              <Text style={styles.boldTxt}>{route.params.quizData.length*10} points</Text>
             </View>
             <View style={{ width: "50%" }}>
               <Text style={styles.lightTxt}>Points Obatined</Text>

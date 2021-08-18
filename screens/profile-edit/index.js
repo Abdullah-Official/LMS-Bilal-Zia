@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ImageBackground } from "react-native";
 import { StatusBar } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
@@ -16,6 +16,7 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { BASE_URL } from "../../app/api";
 import { Spinner } from "native-base";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProfileEdit = ({navigation}) => {
   const [name, setName] = useState();
@@ -23,9 +24,25 @@ const ProfileEdit = ({navigation}) => {
   const [phone, setPhone] = useState();
   const state = useSelector((state) => state.user);
 
+ 
+  const [user, setUser] = useState({});
+  console.log("user from course ", user)
+  async function getUser() {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      setUser(data)
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  useEffect(() => {
+    getUser()
+  },[])
+
   const mutation = useMutation(post => axios.put(`${BASE_URL}/updateuser/${state.user._id}`, post), {
     onSuccess: data =>{
-      alert("Updated Successfully, Please login again to see changes.")
+      alert("Updated Successfully! Please login again to see changes")
     },
     onError: e => {
       console.log(e)
@@ -33,13 +50,17 @@ const ProfileEdit = ({navigation}) => {
   })
 
   const updateUser = () => {
-    mutation.mutate({name,email,phone})
-    setEmail('');
-    setName('');
-    setPhone('');
-    setTimeout(() => {
-      navigation.goBack()
-    },3000)
+   if(name, email,  phone ){
+     mutation.mutate({name,email,phone})
+     setEmail('');
+     setName('');
+     setPhone('');
+     setTimeout(() => {
+       navigation.goBack()
+     },3000)
+   }else{
+    alert("Please fill all required fields")
+   }
   }
 
   return (
@@ -105,7 +126,7 @@ const ProfileEdit = ({navigation}) => {
                         color: "#fff",
                       }}
                     >
-                      {state.user.name.slice(0, 2)}
+                      {state.user.name && state.user.name.slice(0, 2)}
                     </Text>
                   </View>
                 </View>

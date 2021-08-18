@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ImageBackground } from "react-native";
 import { StatusBar } from "react-native";
 import { View, Text } from "react-native";
@@ -13,16 +13,31 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../../app/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CourseDetails = (props) => {
   const navigation = useNavigation();
   const state = useSelector((state) => state.user);
+  const [user, setUser] = useState({});
+  console.log("user from course ", user)
+  async function getUser() {
+    try {
+      let userData = await AsyncStorage.getItem("userData");
+      let data = JSON.parse(userData);
+      setUser(data)
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  useEffect(() => {
+    getUser()
+  },[])
   const mutation = useMutation(
     (post) =>
-      axios.post(
-        `${BASE_URL}/postenrollment/${state.user._id}/${props.route.params.id}`,
-        post
-      ),
+     state.user &&  axios.post(
+      `${BASE_URL}/postenrollment/${state.user._id}/${props.route.params.id}`,
+      post
+    ),
     {
       onSuccess: (data) => {
         console.log(data.data.message);
@@ -38,10 +53,10 @@ const CourseDetails = (props) => {
     }, 1000);
   };
 
-  const enrolled = state.user.coursesEnrolled.find(
+  const enrolled = state.user.coursesEnrolled ? state.user.coursesEnrolled.find(
     (v) => v == props.route.params.id
-  );
-  // console.log(enrolled);
+  ): null
+  console.log(enrolled);
 
   return (
     <ScrollView style={{ backgroundColor: "#2F5060" }}>

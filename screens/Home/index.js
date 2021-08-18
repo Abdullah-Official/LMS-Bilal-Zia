@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList, StatusBar } from "react-native";
 import { Image } from "react-native";
 import { ImageBackground } from "react-native";
-import { Text, View } from "react-native";
+import { Text, View, RefreshControl } from "react-native";
 import CoursesBox from "../../components/Courses";
 import HeaderApp from "../../components/Header";
 import styles from "./styles";
@@ -14,14 +14,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses } from "../../reducers/classReducer";
 import axios from "axios";
 import { BASE_URL } from "../../app/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addToken, userInfo } from "../../reducers/userReducer";
 // import { fetchEnrollClasses } from "../../reducers/enrollclassesReducer";
 
 const Home = () => {
+
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const state = useSelector(state => state.user)
+  // alert(state.user ,  "userrr")
   const [data, setData] = useState([])
-  console.log(state)
+  const [user, setUser] = useState({});
+  const [userToken, setUserToken] = useState("")
+
+  // console.log(user._id, " sasa")
+  // console.log(state)
 //   const { isLoading, error, data } = useQuery('enrollclasses', () =>
 //   fetch(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`).then(res =>
 //     res.json()
@@ -29,28 +37,45 @@ const Home = () => {
 // )
 const classes = useSelector(state => state.classes)
 const enrolledClasses = useSelector(state => state.enrolledClasses)
-console.log(enrolledClasses, " sasasafaf")
+// console.log(enrolledClasses, " sasasafaf")
+// useEffect(() => {
+//   dispatch(userInfo())
+// },[])
+
+// async function getUser() {
+//   try {
+//     let userData = await AsyncStorage.getItem("userData");
+//     let data = JSON.parse(userData);
+//     setUser(data)
+//   } catch (error) {
+//     console.log("Something went wrong", error);
+//   }
+// }
 
 
-
-useEffect(() => {
-  dispatch(fetchClasses())
- fetchEnrolled()
-
-}, [])
-
-  const fetchEnrolled = () => {
-    axios.get(`${BASE_URL}/getenrollclasses/${state.user._id}`)
-    .then(response => setData(response.data.message))
-    .catch(e => console.log("error ", e))
+  const fetchEnrolled =  () => {
+      axios.get(`${BASE_URL}/getenrollclasses/${state.user._id}`)
+     .then(response => {
+       let data = response.data.message;
+       setData(data)
+       console.log("DATA " ,data)
+     })
+     .catch(e => console.log("error ", e)) 
   }
-
+  useEffect(() => {
+    dispatch(fetchClasses())
+    // getUser()
+    // dispatch(userInfo())
+    fetchEnrolled()
+  }, [])
+  
 // console.log(data, " Enrolled")
 
 
   return (
     <>
-      <ScrollView style={{backgroundColor:'#fff'}}>
+      <ScrollView 
+      style={{backgroundColor:'#fff'}}>
         <View style={{ flex: 1 }}>
           <StatusBar translucent={true} />
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -74,7 +99,7 @@ useEffect(() => {
                 <View style={styles.profile_container}>
                   <View>
                     <Text style={styles.helloTxt}>Hello,</Text>
-                    <Text style={styles.nameTxt}>{state.user.name}</Text>
+                    <Text style={styles.nameTxt}>{state.user.name && state.user.name}</Text>
                   </View>
                   <View style={{ justifyContent: "center" }}>
                   <View 
@@ -96,7 +121,7 @@ useEffect(() => {
                       color:"#fff"
                     }}
                   >
-                    {state.user.name.slice(0, 2)}
+                    {state.user.name && state.user.name.slice(0, 2)}
                   </Text>
                 </View>
                   </View>
@@ -109,7 +134,7 @@ useEffect(() => {
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-            {data.length  ? (
+            {data && data.length  ? (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
@@ -119,8 +144,8 @@ useEffect(() => {
                       id={item._id}
                       grade={item.grade}
                       about={item.about}
-                      chapters={item.chapters}
-                      navigation={"Chapters"}
+                      subjects={item.subjects}
+                      navigation={"Subjects"}
                     />
                   )}
                   keyExtractor={(item, index) => index.toString()}

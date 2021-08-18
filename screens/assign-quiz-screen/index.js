@@ -12,7 +12,7 @@ import { Content, Card, CardItem, Body } from "native-base";
 // import {quizData} from '../../Data/quiz'
 
 const QuizAssignmentScreen = (props) => {
-  console.log(props);
+  // console.log(props);
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
   }, []);
@@ -27,7 +27,7 @@ const QuizAssignmentScreen = (props) => {
   const navigation = useNavigation();
   const quizData = props.route.params.quizData;
   // console.log(score)
-
+// console.log(quizData)
   useEffect(() => {
     setOptions(
       handleShuffle([
@@ -39,7 +39,7 @@ const QuizAssignmentScreen = (props) => {
   // console.log(quizData.length)
   const handleNext = () => {
     if (currentIndex >= quizData.length - 1) {
-      navigation.navigate("QuizAssignmentResult", { props, score });
+      navigation.navigate("QuizAssignmentResult", { props, score, quizData });
     } else if (selected) {
       setCurrentIndex(currentIndex + 1);
       setSelected();

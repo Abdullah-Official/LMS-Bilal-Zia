@@ -6,7 +6,7 @@ import HeaderApp from "../../components/Header";
 import styles from "./styles";
 
 const Chapters = ({ route }) => {
-  // console.log(route.params, " chapters data")
+  console.log("START  ",route.params, " chapters data new")
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View style={{ flex: 1, backgroundColor: "#315566", justifyContent:'center'}}>
