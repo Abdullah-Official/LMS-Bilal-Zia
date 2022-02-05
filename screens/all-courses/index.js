@@ -7,12 +7,29 @@ import HeaderApp from "../../components/Header";
 import { CoursesData } from "../../Data/Courses";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchClasses } from "../../reducers/classReducer";
+import axios from 'axios'
+import { BASE_URL } from "../../app/api";
 
 const AllCourses = () => {
-  const classes = useSelector((state) => state.classes);
+  // const classes = useSelector((state) => state.classes);
   const dispatch = useDispatch();
+  const [classes,setClasses] = React.useState([])
+console.log("CLASSE", classes)
+
+  const fetchClass = async () => {
+   try {
+    await axios.get(`${BASE_URL}/getclasses/`)
+    .then(response => {
+      let data = response.data.message;
+      setClasses(data)
+    })
+    .catch(e => console.log("error ", e)) 
+   } catch (error) {
+     console.log(error)
+   }
+  }
   useEffect(() => {
-    dispatch(fetchClasses());
+    fetchClass()
   }, []);
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -37,7 +54,7 @@ const AllCourses = () => {
           <View style={{ alignItems: "center", marginVertical: 20 }}>
             <FlatList
               showsHorizontalScrollIndicator={false}
-              data={classes}
+              data={classes && classes}
               renderItem={({ item }) => (
                 <CoursesBox
                   id={item._id}

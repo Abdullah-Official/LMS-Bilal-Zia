@@ -17,8 +17,10 @@ const styles = StyleSheet.create({
     width: 275,
   },
   questionTxt: {
-    textAlign: "justify",
+    // textAlign: "justify",
+    textAlign:"left",
     marginHorizontal: 6,
+    fontSize:17
   },
   answers_box: {
     flexDirection: "row",

@@ -17,40 +17,72 @@ const QuizAssignmentScreen = (props) => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
   }, []);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState();
   const [score, setScore] = useState(0);
   const [progress, setProgress] = useState(0);
   const [solution, setSolution] = useState(false);
   const [timeOver, setTimeOver] = useState("");
   const navigation = useNavigation();
+  const [currQues, setCurrQues] = useState(0);
   const quizData = props.route.params.quizData;
-  // console.log(score)
+  console.log(score, " SCORE")
 // console.log(quizData)
-  useEffect(() => {
-    setOptions(
-      handleShuffle([
-        quizData[currentIndex]?.correct_answer,
-        ...quizData[currentIndex]?.incorrect_answer,
-      ])
-    );
-  }, [currentIndex]);
-  // console.log(quizData.length)
+
+// const quizData = [
+//   {
+//       question:`Who was first Governer General of pakistan?
+//           a) Allama Iqbal
+//           b) Quaid e azam
+//           c) Liauqat Ali khan
+//           d) None of them`,
+//       correct_answer:"B",
+//       solution:"this is the solution",
+//       options:["A","B" , "C" , "D"]
+//   },
+//   {
+//       question:"this is 2nd question",
+//       correct_answer:"C",
+//       solution:"this is the solution",
+//       options:["A","B" , "C" , "D"]
+
+//   },
+//   {
+//       question:"this is 3rd question",
+//       correct_answer:"A",
+//       solution:"this is the solution",
+//       options:["A","B" , "C" , "D"]
+
+//   }
+
+// ]
+
+
+
+  // useEffect(() => {
+  //   setOptions(
+  //     handleShuffle([
+  //       quizData[currentIndex]?.correct_answer,
+  //       ...quizData[currentIndex]?.incorrect_answer,
+  //     ])
+  //   );
+  // }, [currentIndex]);
+
   const handleNext = () => {
-    if (currentIndex >= quizData.length - 1) {
+    if (currQues >= quizData.length - 1) {
       navigation.navigate("QuizAssignmentResult", { props, score, quizData });
     } else if (selected) {
-      setCurrentIndex(currentIndex + 1);
+      setCurrQues(currQues + 1);
       setSelected();
       setSolution(false);
-    } else alert("Please select atleast one option.");
+    } else
+    setCurrQues(currQues + 1);
+    setSelected();
   };
 
   const handleCheck = (v) => {
     if(!selected){
       setSelected(v);
-    if (v === quizData[currentIndex]?.correct_answer) {
+    if (v === quizData[currQues]?.correct_answer) {
       setScore(score + 10);
       setProgress(progress + 0.1);
     }
@@ -58,26 +90,25 @@ const QuizAssignmentScreen = (props) => {
     }else{
       alert("You can check only one")
     }
+    
   };
 
-  const handleShuffle = (optionss) => {
+  const handleShuffle = (v) => {
     return optionss.sort(() => Math.random() - 0.5);
   };
   const handleSelect = (v) => {
-    if (selected === v && selected === quizData[currentIndex]?.correct_answer) {
+    if (selected === v && selected === quizData[currQues]?.correct_answer) {
       return styles.answers_box, styles.answers_box_correct;
     } else if (
       selected === v &&
-      selected !== quizData[currentIndex]?.correct_answer
+      selected !== quizData[currQues]?.correct_answer
     ) {
       return styles.answers_box, styles.answers_box_wrong;
-    } else if (v === quizData[currentIndex]?.correct_answer) {
+    } else if (v === quizData[currQues]?.correct_answer) {
       return styles.answers_box, styles.answers_box_correct;
-    }
-  };
-
-  // console.log(progress);
-  // const title = props.route.params.topicActivities.topicName;
+    }else{
+      return styles.answers_box
+    }}
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View
@@ -160,22 +191,26 @@ const QuizAssignmentScreen = (props) => {
           <View style={styles.quiz_container}>
             <View style={styles.quiz_main}>
               <Text style={styles.questionTxt}>
-                {quizData[currentIndex].question}
+              {quizData[currQues]?.question || ''}
               </Text>
             </View>
           </View>
           <View style={{ marginTop: 20 }}>
             <View>
               <View style={{ alignItems: "center", marginTop: 14 }}>
-                {options.map((v, i) => (
+                {quizData[currQues] && quizData[currQues].options.map((v) =>(
                   <TouchableOpacity
                     onPress={() => handleCheck(v)}
                     activeOpacity={0.5}
+                    disabled={selected}
                     style={
-                      selected
-                        ? [styles.answers_box, handleSelect(v)]
-                        : styles.answers_box
+                      !selected ? styles.answers_box : (selected && handleSelect(v))
                     }
+                    // style={
+                    //   {...selected, selected
+                    //     ? [styles.answers_box_correct, handleSelect(v)]
+                    //     : styles.answers_box_wrong}
+                    // }
                   >
                     <View>
                       <Text>{v}</Text>
@@ -199,6 +234,7 @@ const QuizAssignmentScreen = (props) => {
           >
             <TouchableOpacity
               onPress={handleNext}
+              disabled={!selected ? true : false}
               activeOpacity={0.7}
               style={styles.btnNext}
             >
@@ -218,7 +254,7 @@ const QuizAssignmentScreen = (props) => {
                   </CardItem>
                   <CardItem bordered>
                     <Body>
-                      <Text>{quizData[currentIndex].solution}</Text>
+                      <Text>{ quizData[currQues] && quizData[currQues]?.solution}</Text>
                     </Body>
                   </CardItem>
                 </Card>

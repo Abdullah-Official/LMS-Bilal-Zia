@@ -40,15 +40,35 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Provider, useSelector} from 'react-redux'
 // import {  store } from "./app/store";
-import { addToken, logout, userInfo } from "./reducers/userReducer";
+import { addToken, logout, userInfo , getTokenn, removeUserDataFromAsyncStorage} from "./reducers/userReducer";
 import { useDispatch } from "react-redux";
 import localStorage from 'react-native-sync-localstorage'
 import { getAsyncStorageValues } from "./app/asyncstorage-values";
-import Subjects from "./screens/subjects";
+import Subjects from "./screens/subjects"
 
 import {store} from './app/store'
 
+const getData = async () => {
+  try {
+    let value = await AsyncStorage.getItem('@token').then(res => {
+      return res;
+    });
+    return value;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
+const getUser = async () => {
+  try {
+    let value = await AsyncStorage.getItem('@user').then(res => {
+      return res;
+    });
+    return value;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 function App({navigation}) {
 
@@ -58,32 +78,93 @@ function App({navigation}) {
   const SearchStack = createStackNavigator();
   const ProfileStack = createStackNavigator();
   const Stack = createStackNavigator();
-  // const navigation = useNavigation()
-  
-  // console.log("user data ", state)
+  const [onboarding, setOnboarding] = useState('')
+  const [token, setToken] = useState('')
   const dispatch = useDispatch()
-  
-  // useEffect(() => {
-  //   dispatch(userInfo())
-   
-  // }, [])
-  const state = useSelector(state => state.user)
-  console.log(state.token , " userReducer" )
-// console.log(state.token, " redux token")
-  // const TOKEN = dispatch(addToken())
-  // console.log(TOKEN, " apna token")
+  const {user: {token: resolvedToken, user}} = useSelector(state => state)
+  console.log(resolvedToken, " NEW TOKENNN")
+  console.log(user, " NEW userr")
+
+  const removeToken = async (props) => {
+    try {
+      await AsyncStorage.removeItem('@user').then(() => {
+        dispatch(removeUserDataFromAsyncStorage());
+        console.log(user, " r user")
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
  
+  React.useEffect(() => {
+    (async () => {
+      let value = await getData().then(res => {
+        // console.log('this is res in APp');
+        console.log(res, ' this');
+        let v = JSON.parse(res);
+        if (res) {
+          dispatch(addToken(res));
+        }
+      });
+    })().catch(err => {
+      console.error(err);
+    });
+  },[user?._id])
+
+  React.useEffect(() => {
+    (async () => {
+      let value = getUser().then(res => {
+        console.log('this is res in APp');
+        console.log(res);
+        let v = JSON.parse(res);
+        console.log(v, " V")
+        if (v._id) {
+          dispatch(userInfo(v));
+        }
+      });
+    })().catch(err => {
+      console.error(err);
+    });
+  },[token])
+    
+  const Logout = async () => {
+    removeToken()
+  }
 
 
-  //  const getToken = async () => {
-  //    try {
-  //     const token = await AsyncStorage.getItem('token')
-  //     setToken(token)
-  //    } catch (error) {
-  //      alert(error
-  //    }
-  //  }
+const getOnboarding = async () => {
+  try {
+    const value = await AsyncStorage.getItem('@onboarding')
+    if(value !== null) {
+      // value previously stored
+      setOnboarding(value)
+    }
+  } catch(e) {
+    // error reading value
+    throw e;
+  }
+}
 
+const getToken = async () => {
+  try{
+    const value = await AsyncStorage.getItem('@token')
+    if(value !== null) {
+      console.log(token, " TOKEN FROM ASYNC")
+      // value previously stored
+      setToken(value)
+      dispatch(getTokenn(token))
+      // alert(value)
+    }
+  }catch(e) {
+    // error reading value
+    throw e;
+  }
+}
+
+useEffect(() => {
+  getOnboarding()
+  // getToken()
+},[])
  
    
  
@@ -283,9 +364,7 @@ function App({navigation}) {
 
   function CustomDrawerContent(props) {
     const LogOut = async () => {
-      
-      dispatch(logout())
-
+      removeToken()
     }
     return (
       <>
@@ -335,7 +414,8 @@ function App({navigation}) {
             />
             <DrawerItem
               label="Log Out"
-              onPress={LogOut}
+              // onPress={() => LogOut()}
+              onPress={() => [props.navigation.closeDrawer(), LogOut()]}
               labelStyle={styles.drawerLabel}
               style={styles.drawerItem}
               icon={() => <Feather name="log-out" size={24} color="white" />}
@@ -356,12 +436,14 @@ function App({navigation}) {
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
+    let a = true
     return (
         <> 
+        <NavigationContainer>
         {
-         state.token && state.token  ?
+         user?._id && user?._id?.length?
           (
-            <NavigationContainer>
+            <>
             <ImageBackground
               style={{
                 flex: 1,
@@ -400,9 +482,9 @@ function App({navigation}) {
               {/* </LinearGradient> */}
             </ImageBackground>
             
-        </NavigationContainer>
+        </>
           ) : (
-<NavigationContainer>
+<>
           <AuthStack.Navigator
               headerMode="none"
               screenOptions={{
@@ -410,19 +492,21 @@ function App({navigation}) {
                 headerTitle: null,
                 headerShown: false,
               }}
-              initialRouteName="Onboarding"
+              initialRouteName={onboarding == 'true' ? 'SignIn' : "Onboarding"}
             >
-              <AuthStack.Screen
+              {onboarding !== 'true' ? ( 
+                <AuthStack.Screen
                 name="Onboarding"
                 component={OnboardingScreen}
-              />
+              /> 
+              ): null}
               <AuthStack.Screen name="SignIn" component={SignIn} />
               <AuthStack.Screen name="SignUp" component={SignUp} />
             </AuthStack.Navigator>
-        </NavigationContainer>
+        </>
           )
         }
-        
+        </NavigationContainer>
         </>
     );
   }

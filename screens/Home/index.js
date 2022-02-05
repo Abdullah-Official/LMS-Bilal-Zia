@@ -15,67 +15,54 @@ import { fetchClasses } from "../../reducers/classReducer";
 import axios from "axios";
 import { BASE_URL } from "../../app/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { addToken, userInfo } from "../../reducers/userReducer";
-// import { fetchEnrollClasses } from "../../reducers/enrollclassesReducer";
+import { getUserData } from "../../reducers/userReducer";
 
 const Home = () => {
 
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const state = useSelector(state => state.user)
-  // alert(state.user ,  "userrr")
+  const {user} = useSelector(state => state.user)
+  const [classes,setClasses] = React.useState([])
+  // console.log(data,  "classes")
   const [data, setData] = useState([])
-  const [user, setUser] = useState({});
-  const [userToken, setUserToken] = useState("")
-
-  // console.log(user._id, " sasa")
-  // console.log(state)
-//   const { isLoading, error, data } = useQuery('enrollclasses', () =>
-//   fetch(`https://physics-by-bilal-zia-29lh6uim8-abdullah-official.vercel.app/getenrollclasses/${state.user._id}`).then(res =>
-//     res.json()
-//   )
-// )
-const classes = useSelector(state => state.classes)
-const enrolledClasses = useSelector(state => state.enrolledClasses)
-// console.log(enrolledClasses, " sasasafaf")
-// useEffect(() => {
-//   dispatch(userInfo())
-// },[])
-
-// async function getUser() {
-//   try {
-//     let userData = await AsyncStorage.getItem("userData");
-//     let data = JSON.parse(userData);
-//     setUser(data)
-//   } catch (error) {
-//     console.log("Something went wrong", error);
-//   }
-// }
-
-
+  // const [user, setUser] = useState({});
+  
   const fetchEnrolled =  () => {
-      axios.get(`${BASE_URL}/getenrollclasses/${state.user._id}`)
-     .then(response => {
-       let data = response.data.message;
-       setData(data)
-       console.log("DATA " ,data)
-     })
-     .catch(e => console.log("error ", e)) 
-  }
+    axios.get(`${BASE_URL}/getenrollclasses/${user?._id}`)
+   .then(response => {
+     let data = response.data.message;
+     setData(data)
+   })
+   .catch(e => console.log("error ", e)) 
+}
+
+const fetchClass =  () => {
+  axios.get(`${BASE_URL}/getclasses/`)
+ .then(response => {
+   let data = response.data.message;
+   setClasses(data)
+  //  console.log("DATA " ,data)
+ })
+ .catch(e => console.log("error ", e)) 
+}
+
+
+ useEffect(() => {
+  fetchEnrolled()
+ },[user?._id])
+
+
+
+
   useEffect(() => {
-    dispatch(fetchClasses())
-    // getUser()
-    // dispatch(userInfo())
-    fetchEnrolled()
+    fetchClass()
   }, [])
   
-// console.log(data, " Enrolled")
 
 
   return (
     <>
-      <ScrollView 
-      style={{backgroundColor:'#fff'}}>
+      <ScrollView style={{ backgroundColor: "#fff" }}>
         <View style={{ flex: 1 }}>
           <StatusBar translucent={true} />
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -88,42 +75,44 @@ const enrolledClasses = useSelector(state => state.enrolledClasses)
                 resizeMode: "contain",
               }}
             >
-              <View style={{justifyContent:'center', marginTop:30}}>
-                <HeaderApp 
-                iconLeft={require('../../assets/nav-con.png')}
-                iconRight={require('../../assets/logo.png')}
-                nav="drawer"
+              <View style={{ justifyContent: "center", marginTop: 30 }}>
+                <HeaderApp
+                  iconLeft={require("../../assets/nav-con.png")}
+                  iconRight={require("../../assets/logo.png")}
+                  nav="drawer"
                 />
               </View>
               <View>
                 <View style={styles.profile_container}>
                   <View>
                     <Text style={styles.helloTxt}>Hello,</Text>
-                    <Text style={styles.nameTxt}>{state.user.name && state.user.name}</Text>
+                    <Text style={styles.nameTxt}>
+                      {(user?.name && user?.name) || ""}
+                    </Text>
                   </View>
                   <View style={{ justifyContent: "center" }}>
-                  <View 
-                style={{
-                  backgroundColor:'#234F8F',
-                  width:55,
-                  height:55,
-                  padding:6,
-                  justifyContent:'center',
-                  alignItems:'center',
-                  borderRadius:100
-                }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 22,
-                      fontWeight: "bold",
-                      textTransform: "uppercase",
-                      color:"#fff"
-                    }}
-                  >
-                    {state.user.name && state.user.name.slice(0, 2)}
-                  </Text>
-                </View>
+                    <View
+                      style={{
+                        backgroundColor: "#234F8F",
+                        width: 55,
+                        height: 55,
+                        padding: 6,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: 100,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 22,
+                          fontWeight: "bold",
+                          textTransform: "uppercase",
+                          color: "#fff",
+                        }}
+                      >
+                        {user?.name && user?.name.slice(0, 2) || ''} 
+                      </Text>
+                    </View>
                   </View>
                 </View>
                 <View style={{ marginTop: 80, marginHorizontal: 25 }}>
@@ -134,7 +123,7 @@ const enrolledClasses = useSelector(state => state.enrolledClasses)
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-            {data && data.length  ? (
+              {data && data.length ? (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
@@ -176,7 +165,11 @@ const enrolledClasses = useSelector(state => state.enrolledClasses)
                   keyExtractor={(item, index) => index.toString()}
                 />
               </View>
-              <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate("AllCourses")} style={{marginHorizontal:25, }}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => navigation.navigate("AllCourses")}
+                style={{ marginHorizontal: 25 }}
+              >
                 <Text style={styles.viewAllTxt}>View all courses</Text>
               </TouchableOpacity>
             </View>

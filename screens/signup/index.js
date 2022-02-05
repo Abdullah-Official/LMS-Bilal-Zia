@@ -9,6 +9,9 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { Spinner } from "native-base";
 import { BASE_URL } from "../../app/api";
+import { ActivityIndicator } from "react-native";
+import { PrimaryColor } from "../../Constants/theme";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignUp = ({ navigation }) => {
   const [name, setName] = useState();
@@ -16,15 +19,15 @@ const SignUp = ({ navigation }) => {
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   const [cpassword, setCPassword] = useState();
+  const validation = name && email && phone && password == cpassword;
   const mutation = useMutation(
-    (post) =>
-      axios.post(
-        `${BASE_URL}/signup`,
-        post
-      ),
+    (post) => axios.post(`${BASE_URL}/signup`, post),
     {
       onSuccess: (data) => {
         alert(data.data.message);
+        setTimeout(() => {
+          navigation.navigate("SignIn")
+        },1000)
       },
       onError: (data) => {
         alert(data.data.message);
@@ -39,6 +42,7 @@ const SignUp = ({ navigation }) => {
     setPhone("");
     setPassword("");
     setCPassword("");
+    // AsyncStorage.removeItem('@onboarding')
   };
 
   return (
@@ -63,11 +67,6 @@ const SignUp = ({ navigation }) => {
             <View style={{ flex: 1, marginHorizontal: 20 }}>
               <View style={{ paddingTop: 110 }}>
                 <Text style={styles.login_heading}>Sign Up</Text>
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  {mutation.isLoading ? <Spinner color="green" /> : null}
-                </View>
               </View>
               {/* <Text>{error}</Text> */}
               <View style={{ marginHorizontal: 20, marginTop: 20 }}>
@@ -122,13 +121,18 @@ const SignUp = ({ navigation }) => {
               <View style={{ marginVertical: 15 }}>
                 <TouchableOpacity
                   onPress={authenticate}
+
                   disabled={
-                    password !== cpassword || password === "" ? true : false
+                   !validation ? true : false
                   }
                   activeOpacity={0.7}
                   style={styles.btn_container}
                 >
-                  <Text style={styles.btn_txt}>Sign up</Text>
+                  {mutation.isLoading ? (
+                    <ActivityIndicator size="small" color={PrimaryColor} />
+                  ) : (
+                    <Text style={styles.btn_txt}>Sign up</Text>
+                  )}
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.7}

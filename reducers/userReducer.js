@@ -7,6 +7,7 @@ const initialState = {
   token: '',
 };
 
+
 const userReducer = createSlice({
   name: "user",
   initialState,
@@ -15,18 +16,19 @@ const userReducer = createSlice({
       state.token = null;
     },
     userInfo: (state, action) => {
-    //   state.token = action.payload.token;
-    //   state.name = action.payload.name;
-    //   state.userId = action.payload._id;
     state.user = action.payload
     },
     addToken:  (state,action) => {
     //  await AsyncStorage.setItem('token', action.payload)
         state.token = action.payload
-    }
+    },
+    removeUserDataFromAsyncStorage: (state, action) => {
+      state.user = {};
+      state.token = '';
+    },
   },
 });
 
-export const { userInfo, logout, addToken } = userReducer.actions;
+export const { userInfo, logout, addToken, removeUserDataFromAsyncStorage} = userReducer.actions;
 
 export default userReducer.reducer;
