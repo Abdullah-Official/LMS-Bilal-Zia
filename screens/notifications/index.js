@@ -7,6 +7,7 @@ import NotificationBox from "../../components/Notification";
 import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import { BASE_URL } from "../../app/api";
+import NoDataComponent from "../../components/noData/no-data";
 
 const Notifications = () => {
   const [isNotif, setIsNotif] = useState([]);
@@ -37,28 +38,12 @@ const Notifications = () => {
       </View>
 
       {!isNotif.length ? (
-        <View
-          style={{
-            flex: 2,
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: -30,
-          }}
-        >
-          <Image source={require("../../assets/notif-bell.png")} />
-          <View
-            style={{
-              marginTop: 40,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={styles.notifTxt1}>No notification found</Text>
-            <Text style={styles.notifTxt2}>
-              We did not find any notification
-            </Text>
-          </View>
-        </View>
+        <NoDataComponent 
+        message="No notification found"
+        description="We did not find any notification"
+        iconPath={require("../../assets/notif-bell.png")}
+        custom={true}
+        />
       ) : (
         <ScrollView>
           <View style={{ flex: 1, marginTop: 30, marginHorizontal: 25 }}>

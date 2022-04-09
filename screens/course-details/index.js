@@ -14,48 +14,59 @@ import { useMutation } from "react-query";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../../app/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CommonAlert from "../../components/alert/common-alert";
 
 const CourseDetails = (props) => {
   const navigation = useNavigation();
   const state = useSelector((state) => state.user);
   const [user, setUser] = useState({});
-  console.log("user from course ", user)
+  const [visible, setVisible] = React.useState(false);
+  const [response, setResponse] = React.useState("");
+  const toggleAlert = React.useCallback(() => {
+    setVisible(!visible);
+  }, [visible]);
   async function getUser() {
     try {
       let userData = await AsyncStorage.getItem("userData");
       let data = JSON.parse(userData);
-      setUser(data)
+      setUser(data);
     } catch (error) {
       console.log("Something went wrong", error);
     }
   }
   useEffect(() => {
-    getUser()
-  },[])
+    getUser();
+  }, []);
   const mutation = useMutation(
     (post) =>
-     state.user &&  axios.post(
-      `${BASE_URL}/postenrollment/${state.user._id}/${props.route.params.id}`,
-      post
-    ),
+      state.user &&
+      axios.post(
+        `${BASE_URL}/postenrollment/${state.user._id}/${props.route.params.id}`,
+        post
+      ),
     {
       onSuccess: (data) => {
+        toggleAlert();
         console.log(data.data.message);
       },
     }
   );
 
-  const EnrollFunc = () => {
+  const EnrollFunc = async () => {
     mutation.mutate();
-    setTimeout(() => {
-      alert(`Your request has been submitted \nYou can access this class after payment.`)
+    if (mutation.isError) {
+      setResponse("Something went wrong. \nContact Instructor of this course.");
       navigation.goBack();
-    }, 1000);
+    } else {
+      setResponse(
+        "Your request has been submitted \nYou can access this class after payment."
+      );
+    }
   };
 
-  const enrolled = state.user.coursesEnrolled ? state.user.coursesEnrolled.find(
-    (v) => v == props.route.params.id
-  ): null
+  const enrolled = state.user.coursesEnrolled
+    ? state.user.coursesEnrolled.find((v) => v == props.route.params.id)
+    : null;
   console.log(enrolled);
 
   return (
@@ -186,6 +197,14 @@ const CourseDetails = (props) => {
           </View>
         </View>
       </View>
+      {response?.length > 0 && (
+        <CommonAlert
+          visible={visible}
+          setVisible={setVisible}
+          response={response}
+          toggleAlert={toggleAlert}
+        />
+      )}
     </ScrollView>
   );
 };

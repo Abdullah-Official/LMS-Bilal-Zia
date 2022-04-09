@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, StatusBar } from "react-native";
+import { ActivityIndicator, FlatList, StatusBar } from "react-native";
 import { Image } from "react-native";
 import { ImageBackground } from "react-native";
 import { Text, View, RefreshControl } from "react-native";
@@ -16,49 +16,57 @@ import axios from "axios";
 import { BASE_URL } from "../../app/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserData } from "../../reducers/userReducer";
+import { PrimaryColor } from "../../Constants/theme";
 
 const Home = () => {
-
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
-  const {user} = useSelector(state => state.user)
-  const [classes,setClasses] = React.useState([])
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { user } = useSelector((state) => state.user);
+  const [classes, setClasses] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [enrollLoading, setEnrollLoading] = React.useState(false);
   // console.log(data,  "classes")
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   // const [user, setUser] = useState({});
-  
-  const fetchEnrolled =  () => {
-    axios.get(`${BASE_URL}/getenrollclasses/${user?._id}`)
-   .then(response => {
-     let data = response.data.message;
-     setData(data)
-   })
-   .catch(e => console.log("error ", e)) 
-}
 
-const fetchClass =  () => {
-  axios.get(`${BASE_URL}/getclasses/`)
- .then(response => {
-   let data = response.data.message;
-   setClasses(data)
-  //  console.log("DATA " ,data)
- })
- .catch(e => console.log("error ", e)) 
-}
+  const fetchEnrolled = () => {
+    axios
+      .get(`${BASE_URL}/getenrollclasses/${user?._id}`)
+      .then((response) => {
+        let data = response.data.message;
+        setEnrollLoading(false);
+        setData(data);
+      })
+      .catch((e) => {
+        console.log("error ", e);
+        setEnrollLoading(false);
+      });
+  };
 
-
- useEffect(() => {
-  fetchEnrolled()
- },[user?._id])
-
-
-
+  const fetchClass = () => {
+    axios
+      .get(`${BASE_URL}/getclasses/`)
+      .then((response) => {
+        let data = response.data.message;
+        setLoading(false);
+        setClasses(data);
+        //  console.log("DATA " ,data)
+      })
+      .catch((e) => {
+        console.log("error ", e);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
-    fetchClass()
-  }, [])
-  
+    setEnrollLoading(true);
+    fetchEnrolled();
+  }, [user?._id]);
 
+  useEffect(() => {
+    setLoading(true);
+    fetchClass();
+  }, []);
 
   return (
     <>
@@ -110,7 +118,7 @@ const fetchClass =  () => {
                           color: "#fff",
                         }}
                       >
-                        {user?.name && user?.name.slice(0, 2) || ''} 
+                        {(user?.name && user?.name.slice(0, 2)) || ""}
                       </Text>
                     </View>
                   </View>
@@ -123,7 +131,13 @@ const fetchClass =  () => {
           </View>
           <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <View>
-              {data && data.length ? (
+              {enrollLoading ? (
+                <ActivityIndicator size="large" color={PrimaryColor} />
+              ) : enrollLoading == false && data?.length == 0 ? (
+                <Text style={styles.noEnrollmentTxt}>
+                  It seems like you haven’t enrolled in any of our courses.
+                </Text>
+              ) : (
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
@@ -139,10 +153,6 @@ const fetchClass =  () => {
                   )}
                   keyExtractor={(item, index) => index.toString()}
                 />
-              ) : (
-                <Text style={styles.noEnrollmentTxt}>
-                  It seems like you haven’t enrolled in any of our courses.
-                </Text>
               )}
             </View>
             <View style={{ marginBottom: 25 }}>
@@ -150,20 +160,26 @@ const fetchClass =  () => {
                 <Text style={styles.coursesTxt}>Recommended for you</Text>
               </View>
               <View>
-                <FlatList
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  data={classes}
-                  renderItem={({ item }) => (
-                    <CoursesBox
-                      id={item._id}
-                      grade={item.grade}
-                      about={item.about}
-                      navigation={"CourseDetails"}
-                    />
-                  )}
-                  keyExtractor={(item, index) => index.toString()}
-                />
+                {loading ? (
+                  <ActivityIndicator size="large" color={PrimaryColor} />
+                ) : loading == false && classes?.length == 0 ? (
+                  <Text style={styles.noEnrollmentTxt}>No Courses Found!</Text>
+                ) : (
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={classes && classes}
+                    renderItem={({ item }) => (
+                      <CoursesBox
+                        id={item._id}
+                        grade={item.grade}
+                        about={item.about}
+                        navigation={"CourseDetails"}
+                      />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                  />
+                )}
               </View>
               <TouchableOpacity
                 activeOpacity={0.7}

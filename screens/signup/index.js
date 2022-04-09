@@ -12,38 +12,52 @@ import { BASE_URL } from "../../app/api";
 import { ActivityIndicator } from "react-native";
 import { PrimaryColor } from "../../Constants/theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CommonAlert from "../../components/alert/common-alert";
+import { useFormik } from "formik";
+import { SignupSchema } from "../../validations/auth";
 
 const SignUp = ({ navigation }) => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [password, setPassword] = useState();
-  const [cpassword, setCPassword] = useState();
-  const validation = name && email && phone && password == cpassword;
+  const [visible, setVisible] = React.useState(false);
+  const [response, setResponse] = React.useState("");
+  const toggleAlert = React.useCallback(() => {
+    setVisible(!visible);
+  }, [visible]);
   const mutation = useMutation(
     (post) => axios.post(`${BASE_URL}/signup`, post),
     {
-      onSuccess: (data) => {
-        alert(data.data.message);
+      onSuccess: async (data) => {
+        let res = await data.data?.message;
+        setResponse(res);
+        toggleAlert();
         setTimeout(() => {
-          navigation.navigate("SignIn")
-        },1000)
+          navigation.navigate("SignIn");
+        }, 2000);
       },
-      onError: (data) => {
-        alert(data.data.message);
+      onError: async (data) => {
+        let res = await data.data?.message;
+        setResponse(res);
+        toggleAlert();
       },
     }
   );
 
-  const authenticate = () => {
-    mutation.mutate({ name, email, phone, password, cpassword });
-    setName("");
-    setEmail("");
-    setPhone("");
-    setPassword("");
-    setCPassword("");
-    // AsyncStorage.removeItem('@onboarding')
+  const authenticate = (values) => {
+    mutation.mutate(values);
   };
+
+  const formik = useFormik({
+    validationSchema: SignupSchema,
+    initialValues: {
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      cpassword: "",
+    },
+    onSubmit: (values) => {
+      authenticate(values);
+    },
+  });
 
   return (
     <>
@@ -74,57 +88,85 @@ const SignUp = ({ navigation }) => {
                   <Text style={styles.placholder}>Name</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setName(e)}
-                    value={name}
+                    onChangeText={formik.handleChange("name")}
+                    value={formik.values.name}
+                    name="name"
                     placeholderTextColor="white"
                   />
+                  {formik.errors.name && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.name}
+                    </Text>
+                  )}
                 </View>
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Email</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setEmail(e)}
-                    value={email}
+                    onChangeText={formik.handleChange("email")}
+                    value={formik.values.email}
+                    keyboardType="email-address"
+                    name="email"
                     placeholderTextColor="white"
                   />
+                  {formik.errors.email && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.email}
+                    </Text>
+                  )}
                 </View>
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Phone</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setPhone(e)}
-                    value={phone}
+                    onChangeText={formik.handleChange("phone")}
+                    value={formik.values.phone}
+                    keyboardType="phone-pad"
+                    name="phone"
                     placeholderTextColor="white"
                   />
+                  {formik.errors.phone && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.phone}
+                    </Text>
+                  )}
                 </View>
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Password</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setPassword(e)}
-                    value={password}
+                    onChangeText={formik.handleChange("password")}
+                    value={formik.values.password}
+                    name="password"
                     placeholderTextColor="white"
                     secureTextEntry={true}
                   />
+                  {formik.errors.password && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.password}
+                    </Text>
+                  )}
                 </View>
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Confirm Password</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setCPassword(e)}
-                    value={cpassword}
+                    onChangeText={formik.handleChange("cpassword")}
+                    value={formik.values.cpassword}
+                    name="cpassword"
                     placeholderTextColor="white"
                     secureTextEntry={true}
                   />
+                  {formik.errors.cpassword && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.cpassword}
+                    </Text>
+                  )}
                 </View>
               </View>
               <View style={{ marginVertical: 15 }}>
                 <TouchableOpacity
-                  onPress={authenticate}
-
-                  disabled={
-                   !validation ? true : false
-                  }
+                  onPress={formik.handleSubmit}
                   activeOpacity={0.7}
                   style={styles.btn_container}
                 >
@@ -146,6 +188,14 @@ const SignUp = ({ navigation }) => {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
+        {response?.length > 0 && (
+          <CommonAlert
+            visible={visible}
+            setVisible={setVisible}
+            response={response}
+            toggleAlert={toggleAlert}
+          />
+        )}
       </ImageBackground>
     </>
   );

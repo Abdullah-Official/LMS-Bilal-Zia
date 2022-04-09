@@ -12,69 +12,84 @@ import { useDispatch } from "react-redux";
 import { addToken, userInfo, userToken } from "../../reducers/userReducer";
 import { Spinner } from "native-base";
 import { BASE_URL } from "../../app/api";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PrimaryColor } from "../../Constants/theme";
+import CommonAlert from "../../components/alert/common-alert";
+import { useFormik } from "formik";
+import { LoginSchema } from "../../validations/auth";
 
 const Signin = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const validation = email && password;
-
+  const [visible, setVisible] = React.useState(false);
+  const [response, setResponse] = React.useState("");
+  const toggleAlert = React.useCallback(() => {
+    setVisible(!visible);
+  }, [visible]);
   const setOnboarding = async (value) => {
     try {
-      await AsyncStorage.setItem('@onboarding', value)
+      await AsyncStorage.setItem("@onboarding", value);
     } catch (e) {
       // saving error
       throw e;
     }
-  }
+  };
 
   const setUser = async (value) => {
     try {
-      const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@user', jsonValue)
-    } catch(e) {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("@user", jsonValue);
+    } catch (e) {
       // save error
-      console.log(e)
-    }  
-  }
+      console.log(e);
+    }
+  };
 
   const setToken = async (value) => {
     try {
-      await AsyncStorage.setItem('@token', value)
-      dispatch(addToken(value))
+      await AsyncStorage.setItem("@token", value);
+      dispatch(addToken(value));
     } catch (e) {
       // saving error
       throw e;
     }
-  }
+  };
 
   const mutation = useMutation(
     (post) => axios.post(`${BASE_URL}/signin`, post),
     {
       onSuccess: (data) => {
-        console.log(data.data.token)
+        console.log(data.data.token);
         dispatch(userInfo(data.data.message));
         dispatch(addToken(data.data.token));
-        setUser(data.data.message)
-        
-        setOnboarding('true')
+        setUser(data.data.message);
+
+        setOnboarding("true");
         //   alert("Success login")
       },
-      onError: (e) => {
-        alert(e.response.data.error);
-        console.log(e)
+      onError: async (e) => {
+        let res = await e.response.data.error;
+        setResponse(res);
+        toggleAlert();
+        // alert(e.response.data.error);
+        console.log(e);
       },
     }
   );
 
-  const authenticate = () => {
-    // dispatch(signinUser({email,password}))
-    mutation.mutate({ email, password });
-    setEmail("");
-    setPassword("");
+  const authenticate = (values) => {
+    mutation.mutate(values);
   };
+
+  const formik = useFormik({
+    validationSchema: LoginSchema,
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      authenticate(values);
+    },
+  });
 
   return (
     <>
@@ -107,27 +122,39 @@ const Signin = ({ navigation }) => {
                   <Text style={styles.placholder}>Email</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setEmail(e)}
-                    value={email}
+                    onChangeText={formik.handleChange("email")}
+                    value={formik.values.email}
+                    keyboardType="email-address"
+                    name="email"
                     placeholderTextColor="white"
                   />
+                  {formik.errors.email && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.email}
+                    </Text>
+                  )}
                 </View>
 
                 <View style={styles.input_container}>
                   <Text style={styles.placholder}>Password</Text>
                   <TextInput
                     style={styles.input}
-                    onChangeText={(e) => setPassword(e)}
-                    value={password}
+                    onChangeText={formik.handleChange("password")}
+                    value={formik.values.password}
+                    name="password"
                     placeholderTextColor="white"
                     secureTextEntry={true}
                   />
+                  {formik.errors.password && (
+                    <Text style={{ color: "red", fontSize: 12, paddingTop: 5 }}>
+                      {formik.errors.password}
+                    </Text>
+                  )}
                 </View>
               </View>
               <View style={{ marginVertical: 15, alignItems: "center" }}>
                 <TouchableOpacity
-                  disabled={!validation ? true : false}
-                  onPress={authenticate}
+                  onPress={formik.handleSubmit}
                   activeOpacity={0.7}
                   style={styles.btn_container}
                 >
@@ -148,6 +175,14 @@ const Signin = ({ navigation }) => {
               </View>
             </View>
           </KeyboardAvoidingView>
+          {response?.length > 0 && (
+            <CommonAlert
+              visible={visible}
+              setVisible={setVisible}
+              response={response}
+              toggleAlert={toggleAlert}
+            />
+          )}
         </ScrollView>
       </ImageBackground>
     </>

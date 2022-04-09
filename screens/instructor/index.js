@@ -31,7 +31,7 @@ const InstructorScreen = () => {
                 marginVertical: 30,
               }}
             >
-              <Text style={styles.whoTxt}>Who am I?</Text>
+              <Text style={styles.whoTxt}>Who I am?</Text>
               <Text style={styles.instInfoTxt}>
                 Cras viverra nibh amet senectus dui, egestas quis. Gravida
                 scelerisque semper nullam eleifend vel lorem lacinia. Gravida

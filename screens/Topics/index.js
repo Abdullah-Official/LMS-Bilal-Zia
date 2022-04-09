@@ -2,14 +2,21 @@ import React from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import HeaderApp from "../../components/Header";
+import NoDataComponent from "../../components/noData/no-data";
 import TopicBox from "../../components/TopicBox";
-import styles from '../Chapters/styles'
+import styles from "../Chapters/styles";
 
-const Topics = ({route}) => {
-    // console.log("topics ", route.params)
+const Topics = ({ route }) => {
+  // console.log("topics ", route.params)
   return (
     <View style={{ flex: 1, backgroundColor: "#315566" }}>
-      <View style={{ flex: 1, backgroundColor: "#315566" , justifyContent:'center'}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#315566",
+          justifyContent: "center",
+        }}
+      >
         <HeaderApp
           title={`CLASS ${route.params.grade}`}
           iconLeft={require("../../assets/back-arrow-white.png")}
@@ -32,22 +39,30 @@ const Topics = ({route}) => {
             <Text style={styles.chapterNameHeading}>{route.params.name}</Text>
           </View>
           <View style={{ alignItems: "center", marginTop: 30 }}>
-            {route.params.topics.map((v, i) => {
-              return (
-                <TopicBox
-                  key={i}
-                  topicName={v.topicName}
-                  topicNumber={v.topicNumber}
-                  quiz={v.quiz}
-                  assignment={v.assignment}
-                  chapterName={route.params.name}
-                  chapterNumber={route.params.id}
-                  grade={route.params.grade}
-                  video={v.video}
-                  topicDescription={v.topicDescription}
-                />
-              );
-            })}
+            {route.params.topics.length > 0 ? (
+              route.params.topics.map((v, i) => {
+                return (
+                  <TopicBox
+                    key={i}
+                    topicName={v.topicName}
+                    topicNumber={v.topicNumber}
+                    quiz={v.quiz}
+                    assignment={v.assignment}
+                    chapterName={route.params.name}
+                    chapterNumber={route.params.id}
+                    grade={route.params.grade}
+                    video={v.video}
+                    topicDescription={v.topicDescription}
+                  />
+                );
+              })
+            ) : (
+              <NoDataComponent
+                message="No topic found"
+                description="We did not find any topics"
+                iconPath={require("../../assets/no-data.png")}
+              />
+            )}
           </View>
         </ScrollView>
       </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ImageBackground } from "react-native";
+import { ActivityIndicator, ImageBackground } from "react-native";
 import { StatusBar } from "react-native";
 import { KeyboardAvoidingView } from "react-native";
 import { Image } from "react-native";
@@ -17,13 +17,18 @@ import { useMutation } from "react-query";
 import { BASE_URL } from "../../app/api";
 import { Spinner } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CommonAlert from "../../components/alert/common-alert";
 
 const ProfileEdit = ({navigation}) => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const state = useSelector((state) => state.user);
-
+  const [visible, setVisible] = React.useState(false);
+  const [response ,setResponse] = React.useState('');
+  const toggleAlert = React.useCallback(() => {
+    setVisible(!visible);
+  }, [visible]);
  
   const [user, setUser] = useState({});
   console.log("user from course ", user)
@@ -42,7 +47,8 @@ const ProfileEdit = ({navigation}) => {
 
   const mutation = useMutation(post => axios.put(`${BASE_URL}/updateuser/${state.user._id}`, post), {
     onSuccess: data =>{
-      alert("Updated Successfully! Please login again to see changes")
+      setResponse('Updated Successfully! Please login again to see changes');
+      toggleAlert()
     },
     onError: e => {
       console.log(e)
@@ -50,16 +56,17 @@ const ProfileEdit = ({navigation}) => {
   })
 
   const updateUser = () => {
-   if(name, email,  phone ){
+   if(name.length || email.length ||  phone.length ){
      mutation.mutate({name,email,phone})
      setEmail('');
      setName('');
      setPhone('');
      setTimeout(() => {
        navigation.goBack()
-     },3000)
+     },4000)
    }else{
-    alert("Please fill all required fields")
+     setResponse("You didn't edit anything ! ")
+    toggleAlert()
    }
   }
 
@@ -132,11 +139,7 @@ const ProfileEdit = ({navigation}) => {
                 </View>
               </ImageBackground>
             </View>
-            <View style={{justifyContent:'center', alignItems:'center'}}>
-                    {mutation.isLoading ? (
-                      <Spinner  color='green' />
-                    ): null}
-                  </View>
+           
             <View
               style={{
                 marginTop: 30,
@@ -203,12 +206,20 @@ const ProfileEdit = ({navigation}) => {
                 }}
               >
                 <TouchableOpacity onPress={updateUser}  style={styles.btnBuy} activeOpacity={0.6}>
-                  <Text style={styles.buyTxt}>SAVE</Text>
+                    {mutation.isLoading ? (
+                      <ActivityIndicator  color='white' size="small" />
+                    ): <Text style={styles.buyTxt}>SAVE</Text>}
+                  
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </KeyboardAvoidingView>
+        {
+          response?.length > 0 && (
+            <CommonAlert visible={visible} setVisible={setVisible} response={response} toggleAlert={toggleAlert} />
+          )
+        }
       </ScrollView>
     </>
   );

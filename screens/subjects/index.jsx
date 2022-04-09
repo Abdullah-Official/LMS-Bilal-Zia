@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ScrollView } from "react-native";
 import { Image } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import HeaderApp from "../../components/Header";
@@ -8,7 +8,7 @@ const Subjects = (props) => {
   const { subjects, grade } = props.route.params;
   console.log("Subject ", subjects)
   return (
-    <View style={{ flex: 1, backgroundColor: "#315566" }}>
+      <View style={{ flex: 1, backgroundColor: "#315566" }}>
       <View
         style={{
           flex: 1,
@@ -53,11 +53,11 @@ const Subjects = (props) => {
                 >
                   <Image
                     source={
-                      i == 0
+                      v.subject.toLowerCase() == 'physics'
                         ? require("../../assets/phy.jpg")
-                        : i == 1
+                        :  v.subject.toLowerCase() == 'mathematics'
                         ? require("../../assets/maths.png")
-                        : i == 2
+                        : v.subject.toLowerCase() == 'chemistry'
                         ? require("../../assets/chem.png")
                         : require("../../assets/bio.png")
                     }
